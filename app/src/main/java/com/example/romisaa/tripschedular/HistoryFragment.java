@@ -50,10 +50,7 @@ public class HistoryFragment extends Fragment {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                googleMap.addMarker(new MarkerOptions().position(getLatLngFromName("Great Pyramid of Giza")).title("Source"));
-                //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, -0.1),50));
-                googleMap.addMarker(new MarkerOptions().position(getLatLngFromName("Dandy Mall")).title("Destination"));
-                googleMap.addPolyline(new PolylineOptions().add(getLatLngFromName("Great Pyramid of Giza"), getLatLngFromName("Dandy Mall")).width(5).color(Color.RED));
+                drawOnMap(googleMap,new DataBaseHandler(getActivity().getApplicationContext()).getallHistoryTrips());
                 mapView.onResume();
             }
         });
@@ -73,11 +70,13 @@ public class HistoryFragment extends Fragment {
 
     public void drawOnMap(GoogleMap map, ArrayList<Trip> trips){
 
+        System.out.println("size="+trips.size());
+
         for (int i=0;i<trips.size();i++){
             map.addMarker(new MarkerOptions().position(getLatLngFromName(trips.get(i).getSource())).title("Source"));
             //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, -0.1),50));
             map.addMarker(new MarkerOptions().position(getLatLngFromName(trips.get(i).getDestination())).title("destination"));
-            map.addPolyline(new PolylineOptions().add(getLatLngFromName(trips.get(i).getSource()), getLatLngFromName(trips.get(i).getDestination())).width(5).color(Color.RED));
+            map.addPolyline(new PolylineOptions().add(getLatLngFromName(trips.get(i).getSource()), getLatLngFromName(trips.get(i).getDestination())).width(5).color((int) Math.round(Math.random()*100)));
         }
     }
 

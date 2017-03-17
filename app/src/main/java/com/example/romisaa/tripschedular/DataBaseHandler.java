@@ -231,14 +231,17 @@ public class DataBaseHandler {
                trip.setSource(cursor.getString(6));
                trip.setDestination(cursor.getString(7));
                tripNotes=getTripNotes(trip.getId());
+               System.out.println("in history");
                System.out.println("id of the trup"+trip.getId());
                trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));
                // Adding contact to list
+               System.out.println("after setnotes");
                triptList.add(trip);
+               System.out.println(triptList.get(0).getName());
            } while (cursor.moveToNext());
 
        }
-
+       System.out.println(triptList.get(1).getName());
        return  triptList;
    }
 
