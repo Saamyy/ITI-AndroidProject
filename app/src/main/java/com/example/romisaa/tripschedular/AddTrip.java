@@ -48,11 +48,11 @@ public class AddTrip extends AppCompatActivity {
     EditText destination;
     EditText note;
     EditText date;
-    EditText time;
     CheckBox tripKind;
 
     Trip newTrip;
     ArrayList <Notes> tripNotes;
+
 
 
 
@@ -67,7 +67,6 @@ public class AddTrip extends AppCompatActivity {
         destination=(EditText) findViewById(R.id.destination);
         note=(EditText) findViewById(R.id.note);
         date=(EditText) findViewById(R.id.date);
-        time=(EditText) findViewById(R.id.time);
         tripKind=(CheckBox) findViewById(R.id.kind);
         newTrip=new Trip();
         tripNotes=new ArrayList<>();
@@ -82,17 +81,17 @@ public class AddTrip extends AppCompatActivity {
                 in.setContent(String.valueOf(note.getText()));
                 tripNotes.add(in);
                 newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
-                newTrip.setDate(String.valueOf(date.getText()));
-                newTrip.setStart(String.valueOf(time.getText()));
+                newTrip.setDate(Long.valueOf(String.valueOf(date.getText())));
                 if(tripKind.isChecked()) {
-                    newTrip.setType("roundtrip");
+                   // create new trip for round trip
                 }
                 else
                 {
-                    newTrip.setStatus("normal");
+                  // create only one trip
                 }
                 newTrip.setStatus("upcoming");
                 handler.addTrip(newTrip);
+
                 Intent intent=new Intent(view.getContext(),MainActivity.class);
                 startActivity(intent);
 
