@@ -107,6 +107,7 @@ public class AddTrip extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DataBaseHandler handler=new DataBaseHandler(getApplicationContext());
+                newTrip.setId((int) System.currentTimeMillis());
                 newTrip.setName(String.valueOf(name.getText()));
                 newTrip.setSource(strsource);
                 newTrip.setDestination(strdestination);
