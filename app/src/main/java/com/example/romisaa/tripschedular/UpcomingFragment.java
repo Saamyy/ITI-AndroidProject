@@ -72,7 +72,7 @@ public class UpcomingFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent=new Intent(view.getContext(),ViewTrip.class);
-                intent.putExtra("name",upCommingTrips.get(position));
+                intent.putExtra("trip",upCommingTrips.get(position));
                 startActivity(intent);
             }
         });
@@ -145,6 +145,9 @@ public class UpcomingFragment extends Fragment {
                         // start
                         // l object m3ak ya abo 5al eml l enta 3ayzo fi
                         Trip out= (Trip) mylistView.getItemAtPosition(listpostion);
+                        handler.changeStatus(out.getId(),"done");
+                        upCommingTrips.remove(listpostion);
+                        adapter.notifyDataSetChanged();
                         startNavigation(out);
                          //Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
                         break;

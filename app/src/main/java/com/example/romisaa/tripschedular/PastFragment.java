@@ -67,7 +67,7 @@ public class PastFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent=new Intent(view.getContext(),ViewTrip.class);
-                intent.putExtra("name",pastTrips.get(position));
+                intent.putExtra("trip",pastTrips.get(position));
                 startActivity(intent);
             }
         });
