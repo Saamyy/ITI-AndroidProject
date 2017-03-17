@@ -237,11 +237,9 @@ public class DataBaseHandler {
                // Adding contact to list
                System.out.println("after setnotes");
                triptList.add(trip);
-               System.out.println(triptList.get(0).getName());
            } while (cursor.moveToNext());
 
        }
-       System.out.println(triptList.get(1).getName());
        return  triptList;
    }
 

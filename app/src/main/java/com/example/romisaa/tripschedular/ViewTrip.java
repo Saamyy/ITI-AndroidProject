@@ -23,12 +23,16 @@ public class ViewTrip extends AppCompatActivity {
         setContentView(R.layout.activity_view_trip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Intent intent=getIntent();
+        Trip trip=(Trip) intent.getParcelableExtra("trip");
         sourceValue=(TextView)findViewById(R.id.sourceValue);
+        sourceValue.setText(trip.getSource());
         destinationValue=(TextView)findViewById(R.id.destinationValue);
+        destinationValue.setText(trip.getDestination());
         date=(TextView)findViewById(R.id.dateValue);
         time=(TextView)findViewById(R.id.timeValue);
         status=(TextView)findViewById(R.id.statusValue);
+        status.setText(trip.getStatus());
         notes=(TextView)findViewById(R.id.notesValue);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

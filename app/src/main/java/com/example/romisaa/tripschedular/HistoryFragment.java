@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,6 +52,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 drawOnMap(googleMap,new DataBaseHandler(getActivity().getApplicationContext()).getallHistoryTrips());
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(26.8206, 30.8025),5));
                 mapView.onResume();
             }
         });
@@ -73,10 +75,10 @@ public class HistoryFragment extends Fragment {
         System.out.println("size="+trips.size());
 
         for (int i=0;i<trips.size();i++){
-            map.addMarker(new MarkerOptions().position(getLatLngFromName(trips.get(i).getSource())).title("Source"));
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, -0.1),50));
-            map.addMarker(new MarkerOptions().position(getLatLngFromName(trips.get(i).getDestination())).title("destination"));
-            map.addPolyline(new PolylineOptions().add(getLatLngFromName(trips.get(i).getSource()), getLatLngFromName(trips.get(i).getDestination())).width(5).color((int) Math.round(Math.random()*100)));
+            System.out.println(trips.get(i).getSource()+"     "+trips.get(i).getDestination());
+            map.addMarker(new MarkerOptions().position(getLatLngFromName(trips.get(i).getSource())).title(trips.get(i).getSource()));
+            map.addMarker(new MarkerOptions().position(getLatLngFromName(trips.get(i).getDestination())).title(trips.get(i).getDestination()));
+            map.addPolyline(new PolylineOptions().add(getLatLngFromName(trips.get(i).getSource()), getLatLngFromName(trips.get(i).getDestination())).width(5).color((Color.RED)));
         }
     }
 
