@@ -42,7 +42,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_TRIPS_TABLE = "CREATE TABLE " + TABLE_TRIPS + "("
-                + TRIP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT,"
+                + TRIP_ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT,"
                 + DURATION + " LONG," +DATE+" LONG,"+STATUS+" TEXT,"+AVE_SPEED+" TEXT,"+
                 SOURCE+" TEXT,"+DESTINATION+" TEXT"+")";
         sqLiteDatabase.execSQL(CREATE_TRIPS_TABLE);

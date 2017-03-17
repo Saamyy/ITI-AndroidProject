@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dataBaseHandler=new DataBaseHandler(this);
-        dataBaseHandler.addTrip(new Trip("100",1231231L,"faisl",123123L,12,"hamada",null,"giza","upcoming"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Samy-WorkStation on 3/15/2017.
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 public class DataBaseHandler {
     DataBaseHelper dbHelper;
+    Calendar calendar;
     private static final String TABLE_TRIPS = "trips";
     //trips table content
     private static final String TRIP_ID = "_id";
@@ -55,6 +57,7 @@ public class DataBaseHandler {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
       //  values.put(TRIP_ID,newTrip.getId());
+        values.put(TRIP_ID,Calendar.getInstance().get(Calendar.MILLISECOND));
         values.put(NAME,newTrip.getName());
         values.put(DURATION,newTrip.getDuration());
         values.put(DATE,newTrip.getDate());
@@ -183,7 +186,7 @@ public class DataBaseHandler {
         if (cursor.moveToFirst()) {
             do {
                 Trip trip = new Trip();
-                trip.setId(Integer.parseInt(cursor.getString(0)));
+                trip.setId(cursor.getInt(0));
                 trip.setName(cursor.getString(1));
                 trip.setDuration(cursor.getLong(2));
                 trip.setDate(cursor.getLong(3));
@@ -219,7 +222,7 @@ public class DataBaseHandler {
            do {
                Trip trip=new Trip();
 
-               trip.setId(Integer.parseInt(cursor.getString(0)));
+               trip.setId(cursor.getInt(0));
                trip.setName(cursor.getString(1));
                trip.setDuration(cursor.getLong(2));
                trip.setDate(cursor.getLong(3));
