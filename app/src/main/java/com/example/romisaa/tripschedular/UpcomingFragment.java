@@ -17,7 +17,7 @@ import android.widget.Toast;
  */
 public class UpcomingFragment extends Fragment {
 
-    String [ ]values={" Giza ","Nasr City "," 6 October "," Haram "};
+    String [ ]values={"samy","hhassan"};
     ArrayAdapter adapter;
     ListView mylistView;
 
@@ -55,26 +55,3 @@ public class UpcomingFragment extends Fragment {
     }
 
 }
-
-/*
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mylistView= (ListView) findViewById(R.id.listView);
-        adapter=new ArrayAdapter(getApplicationContext(),R.layout.singlerow,R.id.textView6,values);
-        mylistView.setAdapter(adapter);
-        mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            //list view    row    element rkam kam
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getApplicationContext(),"youClicked"+(String) parent.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-
-*/

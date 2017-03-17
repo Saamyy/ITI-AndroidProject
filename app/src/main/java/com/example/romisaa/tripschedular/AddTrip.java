@@ -28,6 +28,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,16 +37,24 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-/**
- * A login screen that offers login via email/password.
- */
+
 public class AddTrip extends AppCompatActivity {
 
 
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+
+    EditText name;
+
+    EditText source;
+    EditText destination;
+    EditText note;
+    EditText date;
+    EditText time;
+    CheckBox tripKind;
+
+    Trip newTrip;
+    ArrayList <Notes> tripNotes;
+
+
 
 
     @Override
@@ -53,9 +62,37 @@ public class AddTrip extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        name=(EditText) findViewById(R.id.name);
+        source=(EditText) findViewById(R.id.source);
+        destination=(EditText) findViewById(R.id.destination);
+        note=(EditText) findViewById(R.id.note);
+        date=(EditText) findViewById(R.id.date);
+        time=(EditText) findViewById(R.id.time);
+        tripKind=(CheckBox) findViewById(R.id.kind);
+        newTrip=new Trip();
+        tripNotes=new ArrayList<>();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataBaseHandler handler=new DataBaseHandler(getApplicationContext());
+                newTrip.setName(String.valueOf(name.getText()));
+                newTrip.setSource(String.valueOf(source.getText()));
+                newTrip.setDestination(String.valueOf(destination.getText()));
+                Notes in=new Notes();
+                in.setContent(String.valueOf(note.getText()));
+                tripNotes.add(in);
+                newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
+                newTrip.setDate(String.valueOf(date.getText()));
+                newTrip.setStart(String.valueOf(time.getText()));
+                if(tripKind.isChecked()) {
+                    newTrip.setType("roundtrip");
+                }
+                else
+                {
+                    newTrip.setStatus("normal");
+                }
+                newTrip.setStatus("upcoming");
+                handler.addTrip(newTrip);
                 Intent intent=new Intent(view.getContext(),MainActivity.class);
                 startActivity(intent);
 
