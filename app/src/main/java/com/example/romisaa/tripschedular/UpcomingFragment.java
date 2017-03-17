@@ -145,9 +145,8 @@ public class UpcomingFragment extends Fragment {
                         // start
                         // l object m3ak ya abo 5al eml l enta 3ayzo fi
                         Trip out= (Trip) mylistView.getItemAtPosition(listpostion);
-
-
-                       Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
+                        startNavigation(out);
+                         //Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         // delete

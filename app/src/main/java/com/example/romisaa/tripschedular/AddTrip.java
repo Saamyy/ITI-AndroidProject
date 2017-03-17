@@ -32,6 +32,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +54,12 @@ public class AddTrip extends AppCompatActivity {
     EditText note;
     EditText date;
     CheckBox tripKind;
+    String strsource,strdestination;
 
     Trip newTrip;
     ArrayList <Notes> tripNotes;
+    ArrayList <Notes> rtripNotes;
+
 
 
 
@@ -63,35 +71,66 @@ public class AddTrip extends AppCompatActivity {
         setContentView(R.layout.activity_add_trip);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         name=(EditText) findViewById(R.id.name);
-        source=(EditText) findViewById(R.id.source);
-        destination=(EditText) findViewById(R.id.destination);
         note=(EditText) findViewById(R.id.note);
         date=(EditText) findViewById(R.id.date);
         tripKind=(CheckBox) findViewById(R.id.kind);
+        PlaceAutocompleteFragment placeAutocompleteFragment= (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
+        PlaceAutocompleteFragment placeAutocompleteFragment2= (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+        placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                AddTrip.this.strsource=place.getName().toString();
+
+            }
+
+            @Override
+            public void onError(Status status) {
+
+            }
+        });
+        placeAutocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                AddTrip.this.strdestination=place.getName().toString();
+            }
+
+            @Override
+            public void onError(Status status) {
+
+            }
+        });
         newTrip=new Trip();
         tripNotes=new ArrayList<>();
+        rtripNotes=new ArrayList<>();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DataBaseHandler handler=new DataBaseHandler(getApplicationContext());
                 newTrip.setName(String.valueOf(name.getText()));
-                newTrip.setSource(String.valueOf(source.getText()));
-                newTrip.setDestination(String.valueOf(destination.getText()));
+                newTrip.setSource(strsource);
+                newTrip.setDestination(strdestination);
                 Notes in=new Notes();
                 in.setContent(String.valueOf(note.getText()));
                 tripNotes.add(in);
                 newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
-                newTrip.setDate(Long.valueOf(String.valueOf(date.getText())));
+                newTrip.setDate(null);
+                newTrip.setStatus("upcoming");
                 if(tripKind.isChecked()) {
                    // create new trip for round trip
+                    Trip roundTrip=new Trip();
+                    roundTrip.setName("Round trip of "+String.valueOf(name.getText()));
+                    roundTrip.setSource(strdestination);
+                    roundTrip.setDestination(strsource);
+                    Notes ins=new Notes();
+                    ins.setContent(String.valueOf(note.getText()));
+                    rtripNotes.add(ins);
+                    roundTrip.setNotes(rtripNotes.toArray(new Notes[rtripNotes.size()]));
+                    roundTrip.setDate(null);
+                    roundTrip.setStatus("upcoming");
+                    handler.addTrip(roundTrip);
                 }
-                else
-                {
-                  // create only one trip
-                }
-                newTrip.setStatus("upcoming");
                 handler.addTrip(newTrip);
-
                 Intent intent=new Intent(view.getContext(),MainActivity.class);
                 startActivity(intent);
 

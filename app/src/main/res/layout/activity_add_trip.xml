@@ -31,45 +31,19 @@
     </android.support.design.widget.TextInputLayout>
 
 
-
-
-
-    <android.support.design.widget.TextInputLayout
+    <fragment
+        android:id="@+id/source"
         android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:id="@+id/sourceid">
+        android:layout_height="wrap_content"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
 
-        <EditText
-            android:id="@+id/source"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Source"
-            android:imeActionId="@+id/login"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
-            android:maxLines="1"
-            android:singleLine="true" />
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/destination"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Destination"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-
-                android:maxLines="1"
-                android:singleLine="false" />
-
-        </android.support.design.widget.TextInputLayout>
+    <fragment
+        android:id="@+id/destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
