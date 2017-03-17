@@ -2,6 +2,9 @@ package com.example.romisaa.tripschedular;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -38,36 +41,45 @@ public class AlarmActivity extends AppCompatActivity {
                 // set status to done
                 new DataBaseHandler(getApplicationContext()).changeStatus(trip.getId(), Trip.STATUS_DONE);
 
-                //TODO Replace Toast with Ehab's Map Actiivity
-                Toast.makeText(AlarmActivity.this, "Go To Map With Source " + sourceString + " and Destination " + destinationString, Toast.LENGTH_SHORT).show();
+                Uri uri=Uri.parse("google.navigation:q="+trip.getDestination()+"&mode=d");
+                Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
                 finish();
             }
         });
 
         laterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Notification.Builder builder = new Notification.Builder(AlarmActivity.this)
-                        .setSmallIcon(R.color.colorPrimaryDark)
-                        .setContentTitle("Trip Postponed")
-                        .setContentText("You have a postponed trip to "+destinationString)
-                        .setAutoCancel(true);
+                @Override
+                public void onClick(View v) {
 
-                //set status to postponed
-                new DataBaseHandler(getApplicationContext()).changeStatus(trip.getId(),Trip.STATUS_POSTPONED);
+                    //Changing Status to Postponed
+                    new DataBaseHandler(getApplicationContext()).changeStatus(trip.getId(),Trip.STATUS_POSTPONED);
 
-                //TODO Intent Should be modified to open Ehab's Map Activity
 
-//                Intent notificationIntent = new Intent(getApplicationContext(),Main2Activity.class);
-//                notificationIntent.putExtra("jets",1);
+                    //Setting The Notification
+                    Intent contentIntent = new Intent(getApplicationContext(),Receiver.class);
+                    contentIntent.putExtra("flag","done");
+                    contentIntent.putExtra("trip",trip);
+                    PendingIntent contentPendingIntent = PendingIntent.getBroadcast(getApplicationContext(),trip.getId(),contentIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 
-//                PendingIntent pendingIntent = PendingIntent.getActivity(context,0,notificationIntent,0);
-//                builder.setContentIntent(pendingIntent);
-                NotificationManager mNotificationManager =
-                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                mNotificationManager.notify((int)System.currentTimeMillis(), builder.build());
+                    Intent deleteIntent = new Intent(getApplicationContext(),Receiver.class);
+                    deleteIntent.putExtra("flag","cancelled");
+                    deleteIntent.putExtra("trip",trip);
+                    PendingIntent deletePendingIntent = PendingIntent.getBroadcast(getApplicationContext(),trip.getId()+1,deleteIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 
-                finish();
+
+                    Notification.Builder builder = new Notification.Builder(AlarmActivity.this)
+                            .setSmallIcon(R.color.colorPrimaryDark)
+                            .setContentTitle("Trip Postponed")
+                            .setContentText("You have a postponed trip to "+destinationString)
+                            .setAutoCancel(true)
+                            .setContentIntent(contentPendingIntent)
+                            .setDeleteIntent(deletePendingIntent);
+
+                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    mNotificationManager.notify(trip.getId(), builder.build());
+                    finish();
             }
         });
 
