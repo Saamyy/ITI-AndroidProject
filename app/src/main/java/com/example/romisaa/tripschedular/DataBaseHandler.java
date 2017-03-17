@@ -43,9 +43,11 @@ public class DataBaseHandler {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor=db.query(TABLE_TRIPS, new String [] {"MAX(_id)"}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            maxid=Integer.parseInt(cursor.getString(0));
+            if (cursor.getString(0)!=null) {
+                maxid = Integer.parseInt(cursor.getString(0));
+            }
         }
-        return maxid;
+        return maxid+1;
     }
 
 
@@ -53,7 +55,7 @@ public class DataBaseHandler {
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //  values.put(TRIP_ID,newTrip.getId());
+      //  values.put(TRIP_ID,newTrip.getId());
         values.put(NAME,newTrip.getName());
         values.put(START_TIME,newTrip.getStart());
         values.put(DATE,newTrip.getDate());
@@ -104,7 +106,7 @@ public class DataBaseHandler {
         values.put(DESTINATION,updatedtrip.getDestination());
 
         // updating row
-        return db.update(TABLE_TRIPS, values, TRIP_ID + " = ?",
+         return db.update(TABLE_TRIPS, values, TRIP_ID + " = ?",
                 new String[] { String.valueOf(updatedtrip.getId()) });
     }
     public  int changeStatus(int tripId,String newStatus)
@@ -176,10 +178,11 @@ public class DataBaseHandler {
     {
         ArrayList<Trip> triptList = new ArrayList<Trip>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        ArrayList<Notes> tripNotes=new ArrayList<>();
 
         Cursor cursor = db.query(TABLE_TRIPS, new String[] { TRIP_ID,
-                        NAME, START_TIME,DATE, STATUS,TYPE,AVE_SPEED,SOURCE,DESTINATION}, TYPE + "=?",
-                new String[] { "upcomming" }, null, null, null, null);
+                        NAME, START_TIME,DATE, STATUS,TYPE,AVE_SPEED,SOURCE,DESTINATION}, STATUS + "=?",
+                new String[] { "upcoming" }, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Trip trip = new Trip();
@@ -192,57 +195,61 @@ public class DataBaseHandler {
                 trip.setAveSpeeed(cursor.getString(6));
                 trip.setSource(cursor.getString(7));
                 trip.setDestination(cursor.getString(8));
-
-                // Adding contact to list
-                triptList.add(trip);
-            } while (cursor.moveToNext());
-
-
-        }
-
-        return  triptList;
-    }
-
-    public  ArrayList<Trip>  getallHistoryTrips()
-    {
-        ArrayList<Trip> triptList = new ArrayList<Trip>();
-        ArrayList<Notes> tripNotes=new ArrayList<>();
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_TRIPS, new String[] { TRIP_ID,
-                        NAME, START_TIME,DATE, STATUS,TYPE,AVE_SPEED,SOURCE,DESTINATION}, TYPE + "!=?",
-                new String[] { "upcomming" }, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-                Trip trip=new Trip();
-
-                trip.setId(Integer.parseInt(cursor.getString(0)));
-                trip.setName(cursor.getString(1));
-                trip.setStart(cursor.getString(2));
-                trip.setDate(cursor.getString(3));
-                trip.setStatus(cursor.getString(4));
-                trip.setType(cursor.getString(5));
-                trip.setAveSpeeed(cursor.getString(6));
-                trip.setSource(cursor.getString(7));
-                trip.setDestination(cursor.getString(8));
                 tripNotes=getTripNotes(trip.getId());
+                System.out.println("id of the trup"+trip.getId());
                 trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));
+
                 // Adding contact to list
                 triptList.add(trip);
             } while (cursor.moveToNext());
+
 
         }
 
         return  triptList;
     }
+
+   public  ArrayList<Trip>  getallHistoryTrips()
+   {
+       ArrayList<Trip> triptList = new ArrayList<Trip>();
+       ArrayList<Notes> tripNotes=new ArrayList<>();
+
+       SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+       Cursor cursor = db.query(TABLE_TRIPS, new String[] { TRIP_ID,
+                       NAME, START_TIME,DATE, STATUS,TYPE,AVE_SPEED,SOURCE,DESTINATION}, STATUS + "!=?",
+               new String[] { "upcoming" }, null, null, null, null);
+       if (cursor.moveToFirst()) {
+           do {
+               Trip trip=new Trip();
+
+               trip.setId(Integer.parseInt(cursor.getString(0)));
+               trip.setName(cursor.getString(1));
+               trip.setStart(cursor.getString(2));
+               trip.setDate(cursor.getString(3));
+               trip.setStatus(cursor.getString(4));
+               trip.setType(cursor.getString(5));
+               trip.setAveSpeeed(cursor.getString(6));
+               trip.setSource(cursor.getString(7));
+               trip.setDestination(cursor.getString(8));
+               tripNotes=getTripNotes(trip.getId());
+               System.out.println("id of the trup"+trip.getId());
+               trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));
+               // Adding contact to list
+               triptList.add(trip);
+           } while (cursor.moveToNext());
+
+       }
+
+       return  triptList;
+   }
 
     public  ArrayList<Notes> getallNotes()
     {
         ArrayList<Notes> notestList = new ArrayList<Notes>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NOTES, new String[] { NOTE_ID,
-                CONTENT, TRIP_ID_FOR}, null, null, null, null, null);
+                        CONTENT, TRIP_ID_FOR}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Notes notes = new Notes();
@@ -250,7 +257,7 @@ public class DataBaseHandler {
                 notes.setContent(cursor.getString(1));
                 if(cursor.getString(2)!=null)
 
-                    notes.setTripId(Integer.parseInt(cursor.getString(2)));
+                notes.setTripId(Integer.parseInt(cursor.getString(2)));
 
                 // Adding contact to list
                 notestList.add(notes);
@@ -280,7 +287,5 @@ public class DataBaseHandler {
         }
         return  notestList;
     }
-
-
 }
 

@@ -1,13 +1,10 @@
 package com.example.romisaa.tripschedular;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
- * Created by ehabm on 3/15/2017.
+ * Created by Samy-WorkStation on 3/14/2017.
  */
 
-public class Trip implements Parcelable{
+public class Trip {
     int id;
     String name;
     String status;
@@ -38,6 +35,7 @@ public class Trip implements Parcelable{
         this.aveSpeeed = aveSpeeed;
         this.notes = notes;
         this.date = date;
+
         this.source = source;
         this.start = start;
         this.destination = destination;
@@ -113,15 +111,5 @@ public class Trip implements Parcelable{
 
     public void setStart(String start) {
         this.start = start;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
     }
 }

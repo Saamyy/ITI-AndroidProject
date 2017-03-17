@@ -1,7 +1,7 @@
 package com.example.romisaa.tripschedular;
 
 /**
- * Created by ehabm on 3/15/2017.
+ * Created by Samy-WorkStation on 3/14/2017.
  */
 
 public class Notes {
@@ -43,5 +43,8 @@ public class Notes {
     public void setContent(String content) {
         this.content = content;
     }
-}
 
+
+
+
+}
