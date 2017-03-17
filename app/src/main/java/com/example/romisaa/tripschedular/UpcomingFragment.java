@@ -154,7 +154,7 @@ public class UpcomingFragment extends Fragment {
 
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                         alertDialog.setTitle("Delete");
-                        alertDialog.setMessage("Do you Really want to delete that trip ");
+                        alertDialog.setMessage("Do you Really want to delete that trip?! ");
                         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
