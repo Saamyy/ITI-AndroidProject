@@ -17,10 +17,9 @@ public class DataBaseHandler {
     //trips table content
     private static final String TRIP_ID = "_id";
     private static final String NAME = "name";
-    private static final String START_TIME = "startTime";
+    private static final String DURATION = "Duration";
     private static final String DATE = "date";
     private static final String STATUS = "status";
-    private static final String TYPE = "type";
     private static final String AVE_SPEED = "aveSpeed";
     private static final String SOURCE = "source";
     private static final String DESTINATION = "destination";
@@ -57,10 +56,9 @@ public class DataBaseHandler {
         ContentValues values = new ContentValues();
       //  values.put(TRIP_ID,newTrip.getId());
         values.put(NAME,newTrip.getName());
-        values.put(START_TIME,newTrip.getStart());
+        values.put(DURATION,newTrip.getDuration());
         values.put(DATE,newTrip.getDate());
         values.put(STATUS,newTrip.getStatus());
-        values.put(TYPE,newTrip.getType());
         values.put(AVE_SPEED,newTrip.getAveSpeeed());
         values.put(SOURCE,newTrip.getSource());
         values.put(DESTINATION,newTrip.getDestination());
@@ -97,10 +95,9 @@ public class DataBaseHandler {
         ContentValues values = new ContentValues();
         values.put(TRIP_ID,updatedtrip.getId());
         values.put(NAME,updatedtrip.getName());
-        values.put(START_TIME,updatedtrip.getStart());
+        values.put(DURATION,updatedtrip.getDuration());
         values.put(DATE,updatedtrip.getDate());
         values.put(STATUS,updatedtrip.getStatus());
-        values.put(TYPE,updatedtrip.getType());
         values.put(AVE_SPEED,updatedtrip.getAveSpeeed());
         values.put(SOURCE,updatedtrip.getSource());
         values.put(DESTINATION,updatedtrip.getDestination());
@@ -120,12 +117,12 @@ public class DataBaseHandler {
 
 
     }
-    public  int changeStartTime(int tripId,String newStartTime)
+    public  int changeStartTime(int tripId,Long newStartTime)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(START_TIME,newStartTime);
+        values.put(DATE,newStartTime);
         return db.update(TABLE_TRIPS, values, TRIP_ID + " = ?",
                 new String[] { String.valueOf(tripId) });
 
@@ -181,20 +178,19 @@ public class DataBaseHandler {
         ArrayList<Notes> tripNotes=new ArrayList<>();
 
         Cursor cursor = db.query(TABLE_TRIPS, new String[] { TRIP_ID,
-                        NAME, START_TIME,DATE, STATUS,TYPE,AVE_SPEED,SOURCE,DESTINATION}, STATUS + "=?",
+                        NAME, DURATION,DATE, STATUS,AVE_SPEED,SOURCE,DESTINATION}, STATUS + "=?",
                 new String[] { "upcoming" }, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Trip trip = new Trip();
                 trip.setId(Integer.parseInt(cursor.getString(0)));
                 trip.setName(cursor.getString(1));
-                trip.setStart(cursor.getString(2));
-                trip.setDate(cursor.getString(3));
+                trip.setDuration(cursor.getLong(2));
+                trip.setDate(cursor.getLong(3));
                 trip.setStatus(cursor.getString(4));
-                trip.setType(cursor.getString(5));
-                trip.setAveSpeeed(cursor.getString(6));
-                trip.setSource(cursor.getString(7));
-                trip.setDestination(cursor.getString(8));
+                trip.setAveSpeeed(cursor.getString(5));
+                trip.setSource(cursor.getString(6));
+                trip.setDestination(cursor.getString(7));
                 tripNotes=getTripNotes(trip.getId());
                 System.out.println("id of the trup"+trip.getId());
                 trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));
@@ -217,7 +213,7 @@ public class DataBaseHandler {
        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
        Cursor cursor = db.query(TABLE_TRIPS, new String[] { TRIP_ID,
-                       NAME, START_TIME,DATE, STATUS,TYPE,AVE_SPEED,SOURCE,DESTINATION}, STATUS + "!=?",
+                       NAME, DURATION,DATE, STATUS,AVE_SPEED,SOURCE,DESTINATION}, STATUS + "!=?",
                new String[] { "upcoming" }, null, null, null, null);
        if (cursor.moveToFirst()) {
            do {
@@ -225,13 +221,12 @@ public class DataBaseHandler {
 
                trip.setId(Integer.parseInt(cursor.getString(0)));
                trip.setName(cursor.getString(1));
-               trip.setStart(cursor.getString(2));
-               trip.setDate(cursor.getString(3));
+               trip.setDuration(cursor.getLong(2));
+               trip.setDate(cursor.getLong(3));
                trip.setStatus(cursor.getString(4));
-               trip.setType(cursor.getString(5));
-               trip.setAveSpeeed(cursor.getString(6));
-               trip.setSource(cursor.getString(7));
-               trip.setDestination(cursor.getString(8));
+               trip.setAveSpeeed(cursor.getString(5));
+               trip.setSource(cursor.getString(6));
+               trip.setDestination(cursor.getString(7));
                tripNotes=getTripNotes(trip.getId());
                System.out.println("id of the trup"+trip.getId());
                trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));

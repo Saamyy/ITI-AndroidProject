@@ -74,25 +74,6 @@ public class AddTrip extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBaseHandler handler=new DataBaseHandler(getApplicationContext());
-                newTrip.setName(String.valueOf(name.getText()));
-                newTrip.setSource(String.valueOf(source.getText()));
-                newTrip.setDestination(String.valueOf(destination.getText()));
-                Notes in=new Notes();
-                in.setContent(String.valueOf(note.getText()));
-                tripNotes.add(in);
-                newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
-                newTrip.setDate(String.valueOf(date.getText()));
-                newTrip.setStart(String.valueOf(time.getText()));
-                if(tripKind.isChecked()) {
-                    newTrip.setType("roundtrip");
-                }
-                else
-                {
-                    newTrip.setStatus("normal");
-                }
-                newTrip.setStatus("upcoming");
-                handler.addTrip(newTrip);
                 Intent intent=new Intent(view.getContext(),MainActivity.class);
                 startActivity(intent);
 

@@ -1,10 +1,13 @@
 package com.example.romisaa.tripschedular;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Samy-WorkStation on 3/14/2017.
  */
 
-public class Notes {
+public class Notes implements Parcelable {
     int noteId;
 
     public Notes() {
@@ -15,6 +18,24 @@ public class Notes {
         this.noteId = noteId;
         this.content = content;
     }
+
+    protected Notes(Parcel in) {
+        noteId = in.readInt();
+        tripId = in.readInt();
+        content = in.readString();
+    }
+
+    public static final Creator<Notes> CREATOR = new Creator<Notes>() {
+        @Override
+        public Notes createFromParcel(Parcel in) {
+            return new Notes(in);
+        }
+
+        @Override
+        public Notes[] newArray(int size) {
+            return new Notes[size];
+        }
+    };
 
     public void setTripId(int tripId) {
 
@@ -45,6 +66,15 @@ public class Notes {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(noteId);
+        dest.writeInt(tripId);
+        dest.writeString(content);
+    }
 }
