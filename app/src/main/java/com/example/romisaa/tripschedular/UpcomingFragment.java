@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.UnicodeSetSpanner;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -189,5 +190,16 @@ public class UpcomingFragment extends Fragment {
 
         return view;
     }
+
+    public void startNavigation(Trip trip){
+
+        // delete from array
+        // change status in db to done
+        Uri uri=Uri.parse("google.navigation:q="+trip.getDestination()+"&mode=d");
+        Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
+    }
+
 
 }

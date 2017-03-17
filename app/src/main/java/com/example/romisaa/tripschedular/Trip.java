@@ -1,46 +1,79 @@
 package com.example.romisaa.tripschedular;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Samy-WorkStation on 3/14/2017.
  */
 
-public class Trip implements Serializable {
+public class Trip implements Parcelable{
+
+    public static final String STATUS_DONE = "done";
+    public static final String STATUS_CANCELLED = "cancelled";
+    public static final String STATUS_POSTPONED = "postponed";
+    public static final String STATUS_UPCOMING = "upcoming";
+
     int id;
     String name;
     String status;
-    String type;
     String aveSpeeed;
     String source;
     String destination;
-    String start;
-    String date;
+    Long date;
+    Long duration;
     Notes []notes;
 
     public Trip() {
     }
 
-    public String getDate() {
+    public Trip(String aveSpeeed, Long date, String destination, Long duration, int id, String name, Notes[] notes, String source, String status) {
+        this.aveSpeeed = aveSpeeed;
+        this.date = date;
+        this.destination = destination;
+        this.duration = duration;
+        this.id = id;
+        this.name = name;
+        this.notes = notes;
+        this.source = source;
+        this.status = status;
+    }
+
+    protected Trip(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        status = in.readString();
+        aveSpeeed = in.readString();
+        source = in.readString();
+        destination = in.readString();
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
+
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
-    public Trip(int id, String name, String status, String type, String aveSpeeed, Notes[] notes, String date, String source, String start, String destination) {
-        this.id = id;
-        this.name = name;
-        this.status = status;
-        this.type = type;
-        this.aveSpeeed = aveSpeeed;
-        this.notes = notes;
-        this.date = date;
+    public Long getDuration() {
+        return duration;
+    }
 
-        this.source = source;
-        this.start = start;
-        this.destination = destination;
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     public Notes[] getNotes() {
@@ -75,14 +108,6 @@ public class Trip implements Serializable {
         this.status = status;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getAveSpeeed() {
         return aveSpeeed;
     }
@@ -107,11 +132,18 @@ public class Trip implements Serializable {
         this.destination = destination;
     }
 
-    public String getStart() {
-        return start;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(status);
+        dest.writeString(aveSpeeed);
+        dest.writeString(source);
+        dest.writeString(destination);
     }
 }

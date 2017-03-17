@@ -20,10 +20,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //trips table content
     private static final String TRIP_ID = "_id";
     private static final String NAME = "name";
-    private static final String START_TIME = "startTime";
+    private static final String DURATION = "Duration";
     private static final String DATE = "date";
     private static final String STATUS = "status";
-    private static final String TYPE = "type";
     private static final String AVE_SPEED = "aveSpeed";
     private static final String SOURCE = "source";
     private static final String DESTINATION = "destination";
@@ -43,8 +42,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_TRIPS_TABLE = "CREATE TABLE " + TABLE_TRIPS + "("
-                + TRIP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT,"
-                + START_TIME + " TEXT," +DATE+" TEXT,"+STATUS+" TEXT,"+TYPE+" TEXT,"+AVE_SPEED+" TEXT,"+
+                + TRIP_ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT,"
+                + DURATION + " LONG," +DATE+" LONG,"+STATUS+" TEXT,"+AVE_SPEED+" TEXT,"+
                 SOURCE+" TEXT,"+DESTINATION+" TEXT"+")";
         sqLiteDatabase.execSQL(CREATE_TRIPS_TABLE);
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTES + "("
