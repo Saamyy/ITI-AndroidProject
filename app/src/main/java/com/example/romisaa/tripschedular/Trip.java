@@ -8,6 +8,12 @@ import android.os.Parcelable;
  */
 
 public class Trip implements Parcelable{
+
+    public static final String STATUS_DONE = "done";
+    public static final String STATUS_CANCELLED = "cancelled";
+    public static final String STATUS_POSTPONED = "postponed";
+    public static final String STATUS_UPCOMING = "upcoming";
+
     int id;
     String name;
     String status;
