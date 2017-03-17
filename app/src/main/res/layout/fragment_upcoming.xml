@@ -6,7 +6,7 @@
     tools:context="com.example.romisaa.tripschedular.UpcomingFragment">
 
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:layout_width="match_parent"
         android:id="@+id/tripNames"
         android:layout_height="match_parent" />

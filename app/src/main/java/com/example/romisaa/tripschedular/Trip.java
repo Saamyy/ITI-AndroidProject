@@ -1,10 +1,12 @@
 package com.example.romisaa.tripschedular;
 
+import java.io.Serializable;
+
 /**
  * Created by Samy-WorkStation on 3/14/2017.
  */
 
-public class Trip {
+public class Trip implements Serializable {
     int id;
     String name;
     String status;
