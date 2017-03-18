@@ -56,7 +56,7 @@ public class DataBaseHandler {
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-      //  values.put(TRIP_ID,newTrip.getId());
+        values.put(TRIP_ID,newTrip.getId());
         values.put(TRIP_ID,Calendar.getInstance().get(Calendar.MILLISECOND));
         values.put(NAME,newTrip.getName());
         values.put(DURATION,newTrip.getDuration());
@@ -71,7 +71,7 @@ public class DataBaseHandler {
             System.out.println("lenth l array "+newTrip.getNotes().length);
             for (int i = 0; i < newTrip.getNotes().length; i++)
             {
-                newTrip.getNotes()[counter].setTripId(getNextTripId());
+                newTrip.getNotes()[counter].setTripId(newTrip.getId());
                 addNote(newTrip.getNotes()[counter]);
                 System.out.println(newTrip.getNotes()[counter].getContent());
                 ++counter;
