@@ -56,8 +56,8 @@ public class DataBaseHandler {
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+       // values.put(TRIP_ID,Calendar.getInstance().get(Calendar.MILLISECOND));
         values.put(TRIP_ID,newTrip.getId());
-        values.put(TRIP_ID,Calendar.getInstance().get(Calendar.MILLISECOND));
         values.put(NAME,newTrip.getName());
         values.put(DURATION,newTrip.getDuration());
         values.put(DATE,newTrip.getDate());
