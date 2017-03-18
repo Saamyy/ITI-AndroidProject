@@ -3,9 +3,13 @@ package com.example.romisaa.tripschedular;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +19,42 @@ public class AlarmActivity extends AppCompatActivity {
     String sourceString;
     String destinationString;
     Trip trip;
+    private Vibrator vib;
+   private Ringtone r;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+
+        if (savedInstanceState==null) {
+            try {
+
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                r.play();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        while (r.isPlaying()) {
+                            vib.vibrate(500);
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
@@ -39,6 +74,8 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // set status to done
+                r.stop();
+                vib.cancel();
                 new DataBaseHandler(getApplicationContext()).changeStatus(trip.getId(), Trip.STATUS_DONE);
 
                 Uri uri=Uri.parse("google.navigation:q="+trip.getDestination()+"&mode=d");
@@ -54,6 +91,8 @@ public class AlarmActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     //Changing Status to Postponed
+                    r.stop();
+                    vib.cancel();
                     new DataBaseHandler(getApplicationContext()).changeStatus(trip.getId(),Trip.STATUS_POSTPONED);
 
 
@@ -87,6 +126,8 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //set status to cancelled.
+                r.stop();
+                vib.cancel();
                 new DataBaseHandler(getApplicationContext()).changeStatus(trip.getId(),Trip.STATUS_CANCELLED);
                 finish();
             }
