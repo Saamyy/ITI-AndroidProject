@@ -138,7 +138,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //3ashan mantfdehsh :D 
+        //3ashan mantfdehsh :D
         outState.putString("aywaa","hassa");
     }
 
