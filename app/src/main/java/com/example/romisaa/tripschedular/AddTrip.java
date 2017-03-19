@@ -161,6 +161,7 @@ public class AddTrip extends AppCompatActivity {
                 final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 EditText editText = new EditText(getApplicationContext());
                 editText.setLayoutParams(lparams);
+                editText.setSingleLine(false);  //TODO Check
                 editText.setTextColor(0xff000000);
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
                 editText.setText("Note ..");
