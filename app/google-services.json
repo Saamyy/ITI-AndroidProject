@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "360883632200",
+    "project_id": "tripschedularproject"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360883632200:android:5d2ab77f489d60af",
+        "android_client_info": {
+          "package_name": "com.example.romisaa.tripschedular"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360883632200-mea3erif3fn2pt95cfld8tp80cuim5u8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.romisaa.tripschedular",
+            "certificate_hash": "eec004fc5e023a60e3cfd1c65d1ada4e518661f9"
+          }
+        },
+        {
+          "client_id": "360883632200-28fjcahp9lri20ofsf1td1g2r542ah4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWhM_g3JYexxWLQFnYNMIVplPeahPNnr4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
