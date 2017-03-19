@@ -165,7 +165,7 @@ public class AddTrip extends AppCompatActivity {
                 editText.setTextColor(0xff000000);
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
                 editText.setText("Note ..");
-
+                notesEditTexts.add(editText);
                 //Creating Button
 
                 //Create Horizontal View
@@ -221,10 +221,16 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setDestination(strdestination);
 
 
-                Notes in = new Notes();
-                in.setContent(String.valueOf(note.getText()));
-                tripNotes.add(in);
-                newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
+
+//                in.setContent(String.valueOf(note.getText()));
+                for (EditText editText : notesEditTexts) {
+                    Notes note = new Notes();
+                    note.setContent(editText.getText().toString());
+                    tripNotes.add(note);
+                }
+
+              //  newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
+                newTrip.setNotes(tripNotes);
                 newTrip.setDate(calendar.getTimeInMillis());
                 newTrip.setStatus("upcoming");
                 if (tripKind.isChecked()) {
@@ -236,7 +242,7 @@ public class AddTrip extends AppCompatActivity {
                     Notes ins = new Notes();
                     ins.setContent(String.valueOf(note.getText()));
                     rtripNotes.add(ins);
-                    roundTrip.setNotes(rtripNotes.toArray(new Notes[rtripNotes.size()]));
+                    roundTrip.setNotes(tripNotes);
                     roundTrip.setDate(calendar.getTimeInMillis());
                     roundTrip.setStatus("upcoming");
                     handler.addTrip(roundTrip);
@@ -247,6 +253,12 @@ public class AddTrip extends AppCompatActivity {
                 startActivity(intent);
 
                 Log.i("MyTag", String.valueOf(newTrip.getDate()));
+
+
+                //TODO delete - Just for testing
+                for (Notes note : newTrip.getNotes()) {
+                    Log.i("MyTag",note.getContent());
+                }
             }
         });
 

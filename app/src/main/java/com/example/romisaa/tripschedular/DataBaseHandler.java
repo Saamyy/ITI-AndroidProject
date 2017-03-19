@@ -68,12 +68,12 @@ public class DataBaseHandler {
         if (newTrip.getNotes()!=null) {
             int counter = 0;
 
-            System.out.println("lenth l array "+newTrip.getNotes().length);
-            for (int i = 0; i < newTrip.getNotes().length; i++)
+            System.out.println("lenth l array "+newTrip.getNotes().size());
+            for (int i = 0; i < newTrip.getNotes().size(); i++)
             {
-                newTrip.getNotes()[counter].setTripId(newTrip.getId());
-                addNote(newTrip.getNotes()[counter]);
-                System.out.println(newTrip.getNotes()[counter].getContent());
+                newTrip.getNotes().get(counter).setTripId(newTrip.getId());
+                addNote(newTrip.getNotes().get(counter));
+                System.out.println(newTrip.getNotes().get(counter).getContent());
                 ++counter;
 
             }
@@ -195,8 +195,8 @@ public class DataBaseHandler {
                 trip.setSource(cursor.getString(6));
                 trip.setDestination(cursor.getString(7));
                 tripNotes=getTripNotes(trip.getId());
-                System.out.println("id of the trup"+trip.getId());
-                trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));
+             //   System.out.println("id of the trup"+trip.getId());
+                trip.setNotes(tripNotes);
 
                 // Adding contact to list
                 triptList.add(trip);
@@ -233,7 +233,7 @@ public class DataBaseHandler {
                tripNotes=getTripNotes(trip.getId());
                System.out.println("in history");
                System.out.println("id of the trup"+trip.getId());
-               trip.setNotes( tripNotes.toArray(new Notes[tripNotes.size()]));
+               trip.setNotes( tripNotes);
                // Adding contact to list
                System.out.println("after setnotes");
                triptList.add(trip);
