@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -38,6 +39,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -67,6 +69,9 @@ public class AddTrip extends AppCompatActivity {
     EditText time;
     CheckBox tripKind;
     String strsource, strdestination;
+    FloatingActionButton addNoteBtn;
+    LinearLayout mLayout;
+    ArrayList<EditText> notesEditTexts = new ArrayList<>();
 
     Trip newTrip;
     ArrayList<Notes> tripNotes;
@@ -95,8 +100,10 @@ public class AddTrip extends AppCompatActivity {
 
         //Referencing The Layout
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        addNoteBtn = (FloatingActionButton) findViewById(R.id.addNoteBtn);
+        mLayout = (LinearLayout) findViewById(R.id.mLayout);
         name = (EditText) findViewById(R.id.name);
-        note = (EditText) findViewById(R.id.note);
+//        note = (EditText) findViewById(R.id.note);
         date = (EditText) findViewById(R.id.date);
         time = (EditText) findViewById(R.id.time);
         tripKind = (CheckBox) findViewById(R.id.kind);
@@ -147,6 +154,24 @@ public class AddTrip extends AppCompatActivity {
             }
         });
 
+        addNoteBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating Edit Text
+                final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                EditText editText = new EditText(getApplicationContext());
+                editText.setLayoutParams(lparams);
+                editText.setTextColor(0xff000000);
+                editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                editText.setText("Note ..");
+
+                //Creating Button
+
+                //Create Horizontal View
+                LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+                mLayout.addView(editText);
+            }
+        });
 
         PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
         PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
@@ -234,16 +259,16 @@ public class AddTrip extends AppCompatActivity {
         }
 
 
-//
-//        if(strsource==null || strsource.trim().equals("")){
-//            Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//
-//        if(strdestination==null || strdestination.trim().equals("")){
-//            Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
+
+        if(strsource==null || strsource.trim().equals("")){
+            Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(strdestination==null || strdestination.trim().equals("")){
+            Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             Toast.makeText(AddTrip.this, "Time specified already passed", Toast.LENGTH_SHORT).show();
