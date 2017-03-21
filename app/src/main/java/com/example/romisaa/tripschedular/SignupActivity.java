@@ -1,6 +1,7 @@
 package com.example.romisaa.tripschedular;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,16 +22,25 @@ public class SignupActivity extends AppCompatActivity {
     EditText passwordEditText;
     Button loginButton;
     TextView link;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
+        editor=sharedPreferences.edit();
         final Singleton singleton=Singleton.getInstance(getApplicationContext());
         final RequestQueue requestQueue=singleton.getRequestQueue();
 
+        if (sharedPreferences.contains("email"))
+        {
+            System.out.println(sharedPreferences.getString("email",null));
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
         link = (TextView) findViewById(R.id.linkToLogin);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
@@ -51,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //TODO Send Mail & Password To Servlet
                 Log.i("MyTag","");
-                String url="http://192.168.0.102:8082/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://10.118.50.48:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
 
                  StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -59,6 +69,9 @@ public class SignupActivity extends AppCompatActivity {
                         Log.i("MyTag","success");
                         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                         if(response.equals("done")){
+                            editor.putString("email",emailEditText.getText().toString());
+                            editor.putString("password",passwordEditText.getText().toString());
+                            editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
                         }
