@@ -178,7 +178,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     }
 
 // here we will write the code to handle the respond from google api
-    
+
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d("out", "handleSignInResult:" + result.isSuccess());
 
