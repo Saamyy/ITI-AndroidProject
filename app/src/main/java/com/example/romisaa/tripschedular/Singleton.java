@@ -18,7 +18,7 @@ public class Singleton {
     private RequestQueue requestQueue;
     private static Singleton singleton;
     private Context context;
-    private Request request;
+   private Request request;
 
     private Singleton(Context context) {
         this.context = context;

@@ -10,6 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 public class SignupActivity extends AppCompatActivity {
 
     EditText emailEditText;
@@ -22,6 +27,9 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        final Singleton singleton=Singleton.getInstance(getApplicationContext());
+        final RequestQueue requestQueue=singleton.getRequestQueue();
 
         link = (TextView) findViewById(R.id.linkToLogin);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
@@ -43,6 +51,31 @@ public class SignupActivity extends AppCompatActivity {
 
                 //TODO Send Mail & Password To Servlet
                 Log.i("MyTag","");
+                String url="http://192.168.0.102:8082/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+
+                 StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("MyTag","success");
+                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+                        if(response.equals("done")){
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            //TODO
+                            //hntl3 error msg ll user (user already exists)
+
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("MyTag",error.getMessage());
+                        Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                singleton.addToRequestQueue(stringRequest);
 
             }
         });
@@ -54,6 +87,10 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
 
     }
 
