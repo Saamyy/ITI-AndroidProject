@@ -3,6 +3,8 @@ package com.example.romisaa.tripschedular;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Samy-WorkStation on 3/14/2017.
  */
@@ -15,6 +17,16 @@ public class Trip implements Parcelable{
     public static final String STATUS_UPCOMING = "upcoming";
 
     int id;
+    String userEmail;
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     String name;
     String status;
     String aveSpeeed;
@@ -22,22 +34,13 @@ public class Trip implements Parcelable{
     String destination;
     Long date;
     Long duration;
-    Notes []notes;
+    //Notes []notes;
+    ArrayList <Notes> notes;
 
     public Trip() {
     }
 
-    public Trip(String aveSpeeed, Long date, String destination, Long duration, int id, String name, Notes[] notes, String source, String status) {
-        this.aveSpeeed = aveSpeeed;
-        this.date = date;
-        this.destination = destination;
-        this.duration = duration;
-        this.id = id;
-        this.name = name;
-        this.notes = notes;
-        this.source = source;
-        this.status = status;
-    }
+
 
     protected Trip(Parcel in) {
         id = in.readInt();
@@ -76,11 +79,24 @@ public class Trip implements Parcelable{
         this.duration = duration;
     }
 
-    public Notes[] getNotes() {
+    public ArrayList<Notes> getNotes() {
         return notes;
     }
 
-    public void setNotes(Notes[] notes) {
+    public void setNotes(ArrayList<Notes> notes) {
+        this.notes = notes;
+    }
+
+    public Trip(int id, String name, String status, String aveSpeeed, String source, String destination, Long date, Long duration, ArrayList<Notes> notes) {
+
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.aveSpeeed = aveSpeeed;
+        this.source = source;
+        this.destination = destination;
+        this.date = date;
+        this.duration = duration;
         this.notes = notes;
     }
 

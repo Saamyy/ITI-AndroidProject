@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TripSchedular</string>
+    <string name="facebook_id">1396701503737631</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -27,6 +28,7 @@
     </string>
     <string name="title_activity_view_trip">ViewTrip</string>
     <string name="title_activity_edit_trip">EditTrip</string>
+    <string name="title_activity_login">Sign in</string>
 
 
 </resources>
