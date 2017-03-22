@@ -243,6 +243,41 @@ public class DataBaseHandler {
        return  triptList;
    }
 
+    public  ArrayList<Trip>  getallTrips()
+    {
+        ArrayList<Trip> triptList = new ArrayList<Trip>();
+        ArrayList<Notes> tripNotes=new ArrayList<>();
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_TRIPS, new String[] { TRIP_ID,
+                        NAME, DURATION,DATE, STATUS,AVE_SPEED,SOURCE,DESTINATION},null,
+                null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Trip trip=new Trip();
+
+                trip.setId(cursor.getInt(0));
+                trip.setName(cursor.getString(1));
+                trip.setDuration(cursor.getLong(2));
+                trip.setDate(cursor.getLong(3));
+                trip.setStatus(cursor.getString(4));
+                trip.setAveSpeeed(cursor.getString(5));
+                trip.setSource(cursor.getString(6));
+                trip.setDestination(cursor.getString(7));
+                tripNotes=getTripNotes(trip.getId());
+                System.out.println("in history");
+                System.out.println("id of the trup"+trip.getId());
+                trip.setNotes( tripNotes);
+                // Adding contact to list
+                System.out.println("after setnotes");
+                triptList.add(trip);
+            } while (cursor.moveToNext());
+
+        }
+        return  triptList;
+    }
+
     public  ArrayList<Notes> getallNotes()
     {
         ArrayList<Notes> notestList = new ArrayList<Notes>();

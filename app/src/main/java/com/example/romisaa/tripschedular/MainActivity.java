@@ -3,10 +3,14 @@ package com.example.romisaa.tripschedular;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +25,37 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     DataBaseHandler dataBaseHandler;
+    AlertDialog.Builder alertBuilder;
+    Singleton singleton;
+    RequestQueue requestQueue;
+    Gson gson;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
+        singleton=Singleton.getInstance(this);
+        requestQueue=singleton.getRequestQueue();
+        gson=new Gson();
         dataBaseHandler=new DataBaseHandler(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,6 +125,47 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        alertBuilder=new AlertDialog.Builder(this);
+        alertBuilder.setMessage("Are you sure that you want to synch?");
+        alertBuilder.setTitle("Synching");
+        alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ArrayList<Trip> trips=dataBaseHandler.getallTrips();
+                final String tripJson=gson.toJson(trips);
+
+                String url="http://10.142.1.187:5030/tripSchedularBackEnd/SynchServlet";
+                StringRequest stringRequest=new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("success "+response);
+                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                        Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<String, String>();
+                        params.put("trips",tripJson);
+                        params.put("email",sharedPreferences.getString("email",null));
+                        return params;
+                    }
+                };
+                singleton.addToRequestQueue(stringRequest);
+            }
+        });
+
+        alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         Fragment fragment=null;
         if (id == R.id.upcoming) {
             fragment=new UpcomingFragment();
@@ -109,7 +176,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about) {
-
+            AlertDialog alertDialog=alertBuilder.create();
+            alertDialog.show();
         }
 
         if(fragment!=null){

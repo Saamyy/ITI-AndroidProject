@@ -86,11 +86,11 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                 }
 
                 //TODO Send Mail & Password To Servlet
-                String url="http://10.118.50.48:5030/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://10.142.1.187:5030/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
                 StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println(response);
+                        System.out.println("ana fel response "+response);
                         ArrayList<Trip> trips;
                         java.lang.reflect.Type type = new TypeToken<ArrayList<Trip>>() {}.getType();
                         if (response.equals("not exist")){
@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
           //  mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             System.out.println("user name: "+acct.getDisplayName());
             System.out.println("email:"+ acct.getEmail());
-            String url="http://10.118.50.48:5030/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
+            String url="http://10.142.1.187:5030/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
             StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

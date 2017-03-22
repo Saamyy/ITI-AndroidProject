@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -79,13 +80,14 @@ public class AddTrip extends AppCompatActivity {
 
     Calendar calendar;
     int year, month, day, hours, minutes;
+    SharedPreferences sharedPreferences;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
-
+        sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
         //Filling Data
         calendar = Calendar.getInstance();
         String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
@@ -219,8 +221,6 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setName(String.valueOf(name.getText()));
                 newTrip.setSource(strsource);
                 newTrip.setDestination(strdestination);
-
-
 
 //                in.setContent(String.valueOf(note.getText()));
                 for (EditText editText : notesEditTexts) {

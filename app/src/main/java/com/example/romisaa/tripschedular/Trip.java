@@ -19,13 +19,7 @@ public class Trip implements Parcelable{
     int id;
     String userEmail;
 
-    public String getUserEmail() {
-        return userEmail;
-    }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
 
     String name;
     String status;
@@ -62,6 +56,14 @@ public class Trip implements Parcelable{
             return new Trip[size];
         }
     };
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
     public Long getDate() {
         return date;
