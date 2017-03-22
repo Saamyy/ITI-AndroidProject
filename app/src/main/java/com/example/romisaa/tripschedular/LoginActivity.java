@@ -12,12 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -28,10 +25,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -108,7 +101,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
-                            System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
+//                            System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                         }
 
                     }
