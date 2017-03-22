@@ -52,7 +52,10 @@
             android:name=".EditTrip"
             android:label="@string/title_activity_edit_trip"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AlarmActivity" />
+        <activity android:name=".AlarmActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert"
+            android:noHistory="true"
+            android:taskAffinity=""></activity>
 
         <receiver android:name=".Receiver" />
 
