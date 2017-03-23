@@ -26,7 +26,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.vision.text.Line;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
