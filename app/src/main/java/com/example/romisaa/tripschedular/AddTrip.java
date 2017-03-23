@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -167,6 +168,9 @@ public class AddTrip extends AppCompatActivity {
                 editText.setText("Note ..");
                 notesEditTexts.add(editText);
                 //Creating Button
+                Button remove=new Button(getApplicationContext());
+                //remove.setBackground();
+
 
                 //Create Horizontal View
                 LinearLayout linearLayout = new LinearLayout(getApplicationContext());
@@ -219,6 +223,8 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setName(String.valueOf(name.getText()));
                 newTrip.setSource(strsource);
                 newTrip.setDestination(strdestination);
+                //for testing onlyy
+                newTrip.setDuration((long) 0);
 
 
 

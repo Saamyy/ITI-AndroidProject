@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.romisaa.tripschedular.EditTrip">
+    tools:context="com.example.romisaa.tripschedular.ViewTrip">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,152 +21,157 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_edit_trip" />
+    <include layout="@layout/content_view_trip" />
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:andriod="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:paddingTop="90dp"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
     <LinearLayout
-        android:id="@+id/activity_trip_detail"
+        android:id="@+id/done"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="90dp"
-        android:paddingLeft="20dp"
-        android:weightSum="7"
-        tools:context="com.example.romisaa.tripschedular.TripDetail"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_scrollFlags="scroll"
+        tools:context="com.example.romisaa.tripschedular.AddTrip">
 
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
-
-
-            <TextView
-                android:text="Source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/source"
-                android:layout_weight="1" />
+            android:layout_height="wrap_content">
 
             <EditText
-                android:text=""
-                android:layout_width="wrap_content"
+                android:id="@+id/name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sourceValue"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:hint="Trip Name"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        </android.support.design.widget.TextInputLayout>
+
+
+        <fragment
+            android:id="@+id/source"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:text="Destination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/destination"
-                android:layout_weight="1" />
+        <fragment
+            android:id="@+id/destination"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/destinationValue"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
-
-            <TextView
-                android:text="Date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/date"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:hint="Date"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
             <EditText
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/dateValue"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
-
-            <TextView
-                android:text="Time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/time"
-                android:layout_weight="1" />
-
-            <EditText
-                android:text=""
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/timeValue"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:editable="true"
+                android:hint="Time"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="63dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Notes"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/addNoteBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true"
+                    andriod:fabSize="mini"
+                    andriod:srcCompat="@drawable/plus" />
+
+            </LinearLayout>
+
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/mLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:text="Status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/status"
-                android:layout_weight="1" />
-
-            <EditText
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/statusValue"
-                android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:text="Notes"
-                android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/kind"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/notes"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Assign Back Trip"
+                android:visibility="visible" />
 
-            <EditText
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/notesValue"
-                android:layout_weight="1" />
-        </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+
     </LinearLayout>
+
+</ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -179,6 +182,7 @@
         app:srcCompat="@drawable/diskette"
         app:backgroundTint="@android:color/holo_red_light"/>
 
+    </android.support.design.widget.CoordinatorLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+

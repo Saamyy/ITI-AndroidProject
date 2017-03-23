@@ -34,8 +34,7 @@ public class Trip implements Parcelable{
     String destination;
     Long date;
     Long duration;
-    //Notes []notes;
-    ArrayList <Notes> notes;
+    ArrayList <Notes> notes = new ArrayList<>();
 
     public Trip() {
     }
@@ -49,6 +48,11 @@ public class Trip implements Parcelable{
         aveSpeeed = in.readString();
         source = in.readString();
         destination = in.readString();
+        date = in.readLong();
+        duration = in.readLong();
+     //   in.readTypedList(notes,Notes.CREATOR);
+        in.readTypedList(notes,Notes.CREATOR);
+
     }
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
@@ -161,5 +165,9 @@ public class Trip implements Parcelable{
         dest.writeString(aveSpeeed);
         dest.writeString(source);
         dest.writeString(destination);
+        dest.writeLong(date);
+        dest.writeLong(duration);
+        dest.writeTypedList(notes);
+
     }
 }

@@ -73,6 +73,9 @@ public class UpcomingFragment extends Fragment {
 
                 Intent intent=new Intent(view.getContext(),ViewTrip.class);
                 intent.putExtra("trip",upCommingTrips.get(position));
+                intent.putExtra("note",new Notes(1,"samyNote"));
+              //  System.out.println("l gy mn l upcoming "+upCommingTrips.get(position).getNotes().get(0).getContent());
+
                 startActivity(intent);
             }
         });
