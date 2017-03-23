@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //TODO Send Mail & Password To Servlet
                 Log.i("MyTag","");
-                String url="http://10.118.50.48:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://10.142.1.187:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
 
                  StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -85,7 +85,7 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("MyTag",error.getMessage());
-                        Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);

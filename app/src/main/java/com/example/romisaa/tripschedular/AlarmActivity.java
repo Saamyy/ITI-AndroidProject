@@ -113,6 +113,7 @@ public class AlarmActivity extends AppCompatActivity {
                             .setContentTitle("Trip Postponed")
                             .setContentText("You have a postponed trip to "+destinationString)
                             .setAutoCancel(true)
+                            .setOngoing(true)
                             .setContentIntent(contentPendingIntent)
                             .setDeleteIntent(deletePendingIntent);
 
