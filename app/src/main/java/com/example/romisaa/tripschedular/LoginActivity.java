@@ -2,13 +2,16 @@ package com.example.romisaa.tripschedular;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.vision.text.Line;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -42,6 +46,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     RequestQueue requestQueue;
     Gson gson;
     int  RC_SIGN_IN=0;
+    LinearLayout mLayout;
 
 
     @Override
@@ -60,6 +65,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             startActivity(intent);
         }
 
+        mLayout = (LinearLayout) findViewById(R.id.activity_login);
         link = (TextView) findViewById(R.id.linkToSignup);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
@@ -109,6 +115,10 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
+                        Snackbar.make(mLayout,"Please Check Your Internet Connection",100)
+                                .setActionTextColor(Color.RED)
+                                .show();
+//                          Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
@@ -157,6 +167,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("mafesh connectiom 3lya l ne3ma ");
+        Toast.makeText(this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
     }
     //google
     @Override
