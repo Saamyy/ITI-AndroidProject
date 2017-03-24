@@ -3,17 +3,10 @@ package com.example.romisaa.tripschedular;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
-import static com.example.romisaa.tripschedular.R.id.dateValue;
-import static com.example.romisaa.tripschedular.R.id.notesValue;
-import static com.example.romisaa.tripschedular.R.id.sourceValue;
-import static com.example.romisaa.tripschedular.R.id.statusValue;
-import static com.example.romisaa.tripschedular.R.id.timeValue;
 
 public class EditTrip extends AppCompatActivity {
 
@@ -54,5 +47,7 @@ public class EditTrip extends AppCompatActivity {
             }
         });
     }
+
+
 
 }

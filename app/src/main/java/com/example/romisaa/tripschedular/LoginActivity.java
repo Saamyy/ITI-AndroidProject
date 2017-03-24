@@ -2,10 +2,8 @@ package com.example.romisaa.tripschedular;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +82,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                 }
 
                 //TODO Send Mail & Password To Servlet
-                String url="http://10.142.1.187:5030/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://192.168.0.100:8082/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
                 StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -188,7 +186,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
           //  mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             System.out.println("user name: "+acct.getDisplayName());
             System.out.println("email:"+ acct.getEmail());
-            String url="http://10.142.1.187:5030/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
+            String url="http://192.168.0.100:8082/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
             StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
