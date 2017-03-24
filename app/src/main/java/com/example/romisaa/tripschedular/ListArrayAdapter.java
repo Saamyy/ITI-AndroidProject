@@ -50,6 +50,17 @@ public class ListArrayAdapter  extends ArrayAdapter{
         }
          viewHolder.getTripName().setText(trips.get(position).getName());
          viewHolder.getTripDate().setText(dateToString(trips.get(position).getDate()));
+        switch (trips.get(position).getStatus()) {
+            case Trip.STATUS_CANCELLED:
+                viewHolder.getImage().setImageResource(R.drawable.trip_cancelled);
+                break;
+            case Trip.STATUS_POSTPONED:
+                viewHolder.getImage().setImageResource(R.drawable.trip_postponed);
+                break;
+            case Trip.STATUS_DONE:
+                viewHolder.getImage().setImageResource(R.drawable.trip_done);
+                break;
+        }
         return rowView;
     }
 
