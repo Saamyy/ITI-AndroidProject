@@ -63,7 +63,7 @@ public class UpcomingFragment extends Fragment {
 
         View view= inflater.inflate(R.layout.fragment_upcoming, container, false);
         mylistView= (SwipeMenuListView) view.findViewById(R.id.tripNames);
-        adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow,R.id.tripName,upCommingTrips);
+        adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow2,R.id.tripName,upCommingTrips);
         mylistView.setAdapter(adapter);
 
         mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

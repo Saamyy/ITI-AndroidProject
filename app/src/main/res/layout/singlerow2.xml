@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="5"
+    android:background="@drawable/list_item_selector"
+    android:paddingLeft="10dp"
+    android:paddingStart="3dp">
+
+
+    <ImageView
+        android:layout_width="97dp"
+        android:layout_height="79dp"
+        app:srcCompat="@drawable/car_icon"
+        android:id="@+id/tripImage"
+        android:padding="10dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:weightSum="2">
+
+        <TextView
+            android:text="Trip To ITI"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/tripName"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textSize="30sp"
+            android:fontFamily="serif"
+            android:typeface="serif" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:text="20/10/2010 - 12:00 pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tripDate"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

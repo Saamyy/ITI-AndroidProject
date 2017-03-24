@@ -122,10 +122,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
-                        Snackbar.make(mLayout,"Please Check Your Internet Connection",100)
-                                .setActionTextColor(Color.RED)
-                                .show();
-//                          Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);

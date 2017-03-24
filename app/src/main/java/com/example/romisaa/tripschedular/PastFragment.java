@@ -58,7 +58,7 @@ public class PastFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_past, container, false);
         mylistView= (SwipeMenuListView) view.findViewById(R.id.pastTrips);
-        adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow,R.id.tripName,pastTrips);
+        adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow2,R.id.tripName,pastTrips);
         mylistView.setAdapter(adapter);
 
         mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
