@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                 }
 
                 //TODO Send Mail & Password To Servlet
-                String url="http://10.142.1.187:5030/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://192.168.1.4:5030/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
                 StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                         if (response.equals("not exist")){
                             //TODO
                             // error message for user that invalid email or password
+
                         }
                         else
                         {
@@ -116,6 +117,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
+                        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
@@ -188,7 +190,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
           //  mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             System.out.println("user name: "+acct.getDisplayName());
             System.out.println("email:"+ acct.getEmail());
-            String url="http://10.142.1.187:5030/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
+            String url="http://192.168.1.6:5030/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
             StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
