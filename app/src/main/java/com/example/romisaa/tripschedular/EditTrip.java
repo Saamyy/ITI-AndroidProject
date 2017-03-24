@@ -12,7 +12,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,10 +31,7 @@ public class EditTrip extends AppCompatActivity {
 
 
     EditText name;
-
-    EditText source;
-    EditText destination;
-    EditText note;
+    EditText status;
     EditText date;
     EditText time;
     CheckBox tripKind;
@@ -54,6 +54,7 @@ public class EditTrip extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent=getIntent();
         newTrip=(Trip) intent.getParcelableExtra("trip");
+        System.out.println("l gy mn l edit"+newTrip.getStatus());
 
 
         //Filling Data
@@ -73,18 +74,43 @@ public class EditTrip extends AppCompatActivity {
         addNoteBtn = (FloatingActionButton) findViewById(R.id.addNoteBtn);
         mLayout = (LinearLayout) findViewById(R.id.mLayout);
         name = (EditText) findViewById(R.id.name);
-//        note = (EditText) findViewById(R.id.note);
+
         date = (EditText) findViewById(R.id.date);
         time = (EditText) findViewById(R.id.time);
         tripKind = (CheckBox) findViewById(R.id.kind);
-        source=(EditText) findViewById(R.id.source);
-        destination=(EditText) findViewById(R.id.destination);
+
 
         name.setText(newTrip.getName());
-        source.setText(newTrip.getSource());
-        destination.setText(newTrip.getDestination());
+
+
         PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
         PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+        strsource=newTrip.getSource();
+        strdestination=newTrip.getDestination();
+        placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                EditTrip.this.strsource=place.getName().toString();
+
+            }
+
+            @Override
+            public void onError(Status status) {
+
+            }
+        });
+        placeAutocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                EditTrip.this.strdestination = place.getName().toString();
+            }
+
+            @Override
+            public void onError(Status status) {
+
+            }
+        });
 
 
 

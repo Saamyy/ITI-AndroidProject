@@ -238,7 +238,7 @@ public class AddTrip extends AppCompatActivity {
               //  newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
                 newTrip.setNotes(tripNotes);
                 newTrip.setDate(calendar.getTimeInMillis());
-                newTrip.setStatus("upcoming");
+                newTrip.setStatus(Trip.STATUS_UPCOMING);
                 if (tripKind.isChecked()) {
                     // create new trip for round trip
                     Trip roundTrip = new Trip();

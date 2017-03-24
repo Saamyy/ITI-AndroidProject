@@ -46,6 +46,7 @@ public class ViewTrip extends AppCompatActivity {
         name.setText(trip.getName());
         sourceValue=(TextView)findViewById(R.id.sourceValue);
         sourceValue.setText(trip.getSource());
+        System.out.println(trip.getStatus());
 
         destinationValue=(TextView)findViewById(R.id.destinationValue);
         destinationValue.setText(trip.getDestination());
