@@ -167,7 +167,10 @@ public class AddTrip extends AppCompatActivity {
                 editText.setSingleLine(false);  //TODO Check
                 editText.setTextColor(0xff000000);
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                editText.setText("Note ..");
+               // editText.setText("Note ..");
+                editText.setHintTextColor(0xff000000);
+                editText.setHint("New Note Here ");
+             //   editText.setHintTextColor(0xff000000);
                 notesEditTexts.add(editText);
                 //Creating Button
                 Button remove=new Button(getApplicationContext());
@@ -182,6 +185,8 @@ public class AddTrip extends AppCompatActivity {
 
         PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
         PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+        placeAutocompleteFragment.setHint("Source");
+        placeAutocompleteFragment2.setHint("destenation");
         placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -229,12 +234,22 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setDuration((long) 0);
 
 //                in.setContent(String.valueOf(note.getText()));
-                for (EditText editText : notesEditTexts) {
+                for(int i=0;i<tripNotes.size();i++)
+                {
+                    if(!notesEditTexts.get(i).getText().toString().isEmpty())
+                    {
+                        Notes note = new Notes();
+                        note.setContent(notesEditTexts.get(i).getText().toString());
+                        tripNotes.add(note);
+                    }
+                }
+
+             /*   for (EditText editText : notesEditTexts) {
                     Notes note = new Notes();
                     note.setContent(editText.getText().toString());
                     tripNotes.add(note);
                 }
-
+*/
               //  newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
                 newTrip.setNotes(tripNotes);
                 newTrip.setDate(calendar.getTimeInMillis());
@@ -250,6 +265,7 @@ public class AddTrip extends AppCompatActivity {
                     roundTrip.setName(String.valueOf(name.getText())+" - Return");
                     roundTrip.setSource(strdestination);
                     roundTrip.setDestination(strsource);
+                    roundTrip.setDuration((long) 0);
                     Notes ins = new Notes();
                     ins.setContent("Return trip of "+name.getText());
                     rtripNotes.add(ins);

@@ -166,8 +166,10 @@ public class UpcomingFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Trip deleted= (Trip) mylistView.getItemAtPosition(listpostion);
                                         handler.deleteTrip(deleted.getId());
+                                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
                                         upCommingTrips.remove(listpostion);
                                         adapter.notifyDataSetChanged();
+
                                     }
                                 });
                                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",

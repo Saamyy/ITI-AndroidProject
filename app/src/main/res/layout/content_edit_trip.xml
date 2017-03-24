@@ -20,65 +20,42 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:andriod="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-    <include layout="@layout/content_view_trip" />
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:andriod="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
 
 
     <LinearLayout
         android:id="@+id/done"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="80dp"
-        android:paddingLeft="10dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:weightSum="1"
+        android:paddingTop="90dp"
+        android:paddingLeft="20dp"
         app:layout_scrollFlags="scroll"
         tools:context="com.example.romisaa.tripschedular.AddTrip">
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/nameEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="Trip Name"
+            android:imeActionId="@+id/login"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Trip Name"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Status"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-        </android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
 
 
@@ -93,7 +70,6 @@
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
 
 
@@ -176,25 +152,67 @@
 
         </LinearLayout>
 
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
+            <TextView
+                android:id="@+id/lable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="30px"
+                android:textColor="@android:color/holo_red_light"
+                android:text="Status"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+
+            <TextView
+                android:id="@+id/statusEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="50px"
+                android:hint="Status"
+                android:textStyle="bold"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
             <CheckBox
-                android:id="@+id/kind"
+                android:id="@+id/markasdone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Assign Back Trip"
+                android:text="Mark As Done"
                 android:visibility="visible" />
-
         </android.support.design.widget.TextInputLayout>
 
 
 
 
 
-        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
     </ScrollView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -204,5 +222,4 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@android:color/holo_red_light"
         app:srcCompat="@drawable/diskette" />
-
     </android.support.design.widget.CoordinatorLayout>

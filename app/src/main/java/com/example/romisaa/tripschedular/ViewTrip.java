@@ -36,12 +36,13 @@ public class ViewTrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_trip);
-        Notes note = getIntent().getExtras().getParcelable("note");
-        Log.i("MyTag",note.getContent());
+  //      Notes note = getIntent().getExtras().getParcelable("note");
+//        Log.i("MyTag",note.getContent());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent=getIntent();
          trip=(Trip) intent.getParcelableExtra("trip");
+
         name=(TextView)  findViewById(R.id.nameValue);
         name.setText(trip.getName());
         sourceValue=(TextView)findViewById(R.id.sourceValue);
@@ -97,6 +98,10 @@ public class ViewTrip extends AppCompatActivity {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if(intent.hasExtra("past"))
+        {
+            fab.setVisibility(View.GONE);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
