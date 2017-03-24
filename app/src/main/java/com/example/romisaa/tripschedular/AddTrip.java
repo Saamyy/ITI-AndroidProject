@@ -235,16 +235,22 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setStatus("upcoming");
                 if (tripKind.isChecked()) {
                     // create new trip for round trip
+                    Calendar returnCalendar = Calendar.getInstance();
+                    returnCalendar.setTimeInMillis(calendar.getTimeInMillis());
+                    returnCalendar.set(Calendar.HOUR_OF_DAY,returnCalendar.get(Calendar.HOUR_OF_DAY)+2);
+
                     Trip roundTrip = new Trip();
-                    roundTrip.setName("Round trip of " + String.valueOf(name.getText()));
+                    roundTrip.setId((int) System.currentTimeMillis()+1);
+                    roundTrip.setName(String.valueOf(name.getText())+" - Return");
                     roundTrip.setSource(strdestination);
                     roundTrip.setDestination(strsource);
                     Notes ins = new Notes();
-                    ins.setContent(String.valueOf(note.getText()));
+                    ins.setContent("Return trip of "+name.getText());
                     rtripNotes.add(ins);
                     roundTrip.setNotes(tripNotes);
-                    roundTrip.setDate(calendar.getTimeInMillis());
+                    roundTrip.setDate(returnCalendar.getTimeInMillis());
                     roundTrip.setStatus("upcoming");
+                    TaskManager.getInstance(getApplicationContext()).setTask(roundTrip);
                     handler.addTrip(roundTrip);
                 }
                 handler.addTrip(newTrip);
@@ -282,7 +288,6 @@ public class AddTrip extends AppCompatActivity {
             Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
             return false;
         }
-
         if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             Toast.makeText(AddTrip.this, "Time specified already passed", Toast.LENGTH_SHORT).show();
             return false;

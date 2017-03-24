@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class ViewHolder {
     View converView;
     TextView tripName;
+    TextView tripDate;
 
     public ViewHolder(View converView) {
         this.converView = converView;
@@ -19,5 +20,11 @@ public class ViewHolder {
         if (tripName==null)
             tripName=(TextView) converView.findViewById(R.id.tripName);
         return tripName;
+    }
+
+    public TextView getTripDate(){
+        if(tripDate==null)
+            tripDate=(TextView) converView.findViewById(R.id.tripDate);
+        return tripDate;
     }
 }

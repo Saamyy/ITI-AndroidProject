@@ -13,10 +13,11 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AlarmActivity extends AppCompatActivity {
-    String sourceString;
+    String nameString;
     String destinationString;
     Trip trip;
     private Vibrator vib;
@@ -64,11 +65,15 @@ public class AlarmActivity extends AppCompatActivity {
         Button startButton = (Button) findViewById(R.id.button2);
         Button laterButton = (Button) findViewById(R.id.button3);
         Button cancelButton = (Button) findViewById(R.id.button4);
+        TextView alarmTitle = (TextView) findViewById(R.id.alarmTitle);
+        TextView alarmDesc = (TextView) findViewById(R.id.alarmDesc);
 
         trip = getIntent().getExtras().getParcelable("trip");
-
-        sourceString = trip.getSource();
+        nameString = trip.getName();
         destinationString = trip.getDestination();
+
+        alarmTitle.setText(nameString);
+        alarmDesc.setText("It's time for your trip to "+destinationString);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override

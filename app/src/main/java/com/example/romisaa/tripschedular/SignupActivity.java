@@ -78,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
                         else{
                             //TODO
                             //hntl3 error msg ll user (user already exists)
-
+                            Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -96,8 +96,7 @@ public class SignupActivity extends AppCompatActivity {
         link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
