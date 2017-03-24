@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //TODO Send Mail & Password To Servlet
                 Log.i("MyTag","");
-                String url="http://10.142.1.187:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://192.168.1.4:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
 
                  StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -78,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
                         else{
                             //TODO
                             //hntl3 error msg ll user (user already exists)
-
+                            Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -96,8 +96,7 @@ public class SignupActivity extends AppCompatActivity {
         link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
