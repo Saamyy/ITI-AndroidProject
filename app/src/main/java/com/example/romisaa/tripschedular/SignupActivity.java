@@ -85,7 +85,7 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("MyTag",error.getMessage());
-                        Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
