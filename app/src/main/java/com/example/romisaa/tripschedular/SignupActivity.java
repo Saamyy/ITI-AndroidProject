@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //TODO Send Mail & Password To Servlet
                 Log.i("MyTag","");
-                String url="http://10.142.1.187:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="http://192.168.1.4:5030/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
 
                  StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
