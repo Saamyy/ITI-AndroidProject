@@ -2,42 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:weightSum="5"
     android:background="@drawable/list_item_selector"
-    android:paddingLeft="10dp"
-    android:paddingStart="3dp">
+    android:paddingLeft="10dp">
 
 
     <ImageView
-        android:layout_width="97dp"
-        android:layout_height="79dp"
+        android:layout_width="58dp"
+        android:layout_height="52dp"
         app:srcCompat="@drawable/trip"
         android:id="@+id/tripImage"
-        android:padding="10dp" />
+        android:padding="2dp" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
-        android:weightSum="2">
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:layout_weight="4.85">
 
         <TextView
             android:text="Trip To ITI"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/tripName"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical"
-            android:textSize="30sp"
-            android:fontFamily="serif"
-            android:typeface="serif" />
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-condensed"
+            android:typeface="serif"
+            android:paddingLeft="5dp"
+            android:textStyle="normal|bold" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
             <TextView
@@ -47,7 +48,8 @@
                 android:id="@+id/tripDate"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:paddingLeft="5dp" />
+                android:paddingLeft="5dp"
+                android:fontFamily="sans-serif-condensed" />
 
         </LinearLayout>
     </LinearLayout>
