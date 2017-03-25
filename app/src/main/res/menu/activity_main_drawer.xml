@@ -25,12 +25,8 @@
                 android:title="Help" />
             <item
                 android:id="@+id/about"
-                android:icon="@drawable/mark"
-                android:title="About" />
-            <item
-                android:id="@+id/logout"
-                android:icon="@drawable/logout"
-                android:title="Logout" />
+                android:icon="@drawable/sync"
+                android:title="Sync" />
 
         </menu>
     </item>

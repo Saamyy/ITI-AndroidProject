@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -34,12 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import static com.example.romisaa.tripschedular.R.id.dateValue;
-import static com.example.romisaa.tripschedular.R.id.notesValue;
-import static com.example.romisaa.tripschedular.R.id.sourceValue;
-import static com.example.romisaa.tripschedular.R.id.statusValue;
-import static com.example.romisaa.tripschedular.R.id.timeValue;
 
 public class EditTrip extends AppCompatActivity {
 
@@ -341,5 +334,7 @@ public class EditTrip extends AppCompatActivity {
 
         return true;
     }
+
+
 
 }

@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="97dp"
         android:layout_height="79dp"
-        app:srcCompat="@drawable/car_icon"
+        app:srcCompat="@drawable/trip"
         android:id="@+id/tripImage"
         android:padding="10dp" />
 

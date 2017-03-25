@@ -1,6 +1,7 @@
 package com.example.romisaa.tripschedular;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -11,6 +12,7 @@ public class ViewHolder {
     View converView;
     TextView tripName;
     TextView tripDate;
+    ImageView imageView;
 
     public ViewHolder(View converView) {
         this.converView = converView;
@@ -26,5 +28,11 @@ public class ViewHolder {
         if(tripDate==null)
             tripDate=(TextView) converView.findViewById(R.id.tripDate);
         return tripDate;
+    }
+
+    public ImageView getImage() {
+        if (imageView == null)
+            imageView = (ImageView) converView.findViewById(R.id.tripImage);
+        return imageView;
     }
 }

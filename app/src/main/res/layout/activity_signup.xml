@@ -50,11 +50,13 @@
             android:text="Sign Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/loginBtn" />
+            android:layout_marginTop="40dp"
+            android:id="@+id/loginBtn"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/cardview_light_background" />
     </LinearLayout>
 
     <TextView
-        android:text="Already a user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linkToLogin"
