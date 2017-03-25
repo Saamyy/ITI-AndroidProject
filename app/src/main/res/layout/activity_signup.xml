@@ -53,7 +53,7 @@
             android:layout_marginTop="40dp"
             android:id="@+id/loginBtn"
             android:background="@color/colorPrimary"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="@color/cast_expanded_controller_ad_container_white_stripe_color" />
     </LinearLayout>
 
     <TextView

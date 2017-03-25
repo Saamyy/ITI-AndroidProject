@@ -54,7 +54,7 @@
             android:layout_marginTop="40dp"
             android:fontFamily="sans-serif"
             android:background="@color/colorPrimary"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="@color/cast_expanded_controller_text_color" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
