@@ -87,8 +87,8 @@ public class EditTrip extends AppCompatActivity {
 
         status=(TextView) findViewById(R.id.statusEdit);
         status.setText(newTrip.getStatus());
-        PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
-        PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+        final PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
+        final PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
         placeAutocompleteFragment.setHint("Source");
         placeAutocompleteFragment2.setHint("destenation");
         placeAutocompleteFragment.setText(tripNameFromLngLat(newTrip.getSource()));
@@ -99,7 +99,7 @@ public class EditTrip extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
 
-                EditTrip.this.strsource = place.getName().toString();
+                EditTrip.this.strsource =place.getLatLng().latitude+","+place.getLatLng().longitude+"#"+place.getName();
 
             }
 
@@ -111,12 +111,27 @@ public class EditTrip extends AppCompatActivity {
         placeAutocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                EditTrip.this.strdestination = place.getName().toString();
+                EditTrip.this.strdestination =place.getLatLng().latitude+","+place.getLatLng().longitude+"#"+place.getName();
             }
 
             @Override
             public void onError(Status status) {
 
+            }
+        });
+        placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_clear_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                placeAutocompleteFragment.setText("");
+                EditTrip.this.strsource = "";
+            }
+        });
+
+        placeAutocompleteFragment2.getView().findViewById(R.id.place_autocomplete_clear_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                placeAutocompleteFragment2.setText("");
+                EditTrip.this.strsource = "";
             }
         });
         date=(EditText) findViewById(R.id.date);
@@ -336,7 +351,7 @@ public class EditTrip extends AppCompatActivity {
     }
 
     public String tripNameFromLngLat(String fullName){
-        return fullName.substring(fullName.indexOf("#"),fullName.length());
+        return fullName.substring(fullName.indexOf("#")+1,fullName.length());
     }
 
 

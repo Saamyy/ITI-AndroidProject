@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.gcm.Task;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -123,6 +125,7 @@ public class ViewTrip extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -135,12 +138,14 @@ public class ViewTrip extends AppCompatActivity {
             Intent intent=new Intent(Intent.ACTION_VIEW,uri);
             intent.setPackage("com.google.android.apps.maps");
             dataBaseHandler.changeStatus(trip.getId(),"done");
+            TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
             startActivity(intent);
 
         }
         if (id == R.id.mark_done) {
 
             dataBaseHandler.changeStatus(trip.getId(),"done");
+            TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
            // finish();
@@ -151,17 +156,18 @@ public class ViewTrip extends AppCompatActivity {
             returnCalendar.set(Calendar.HOUR_OF_DAY,returnCalendar.get(Calendar.HOUR_OF_DAY)+2);
             Trip roundTrip = new Trip();
             roundTrip.setId((int) System.currentTimeMillis()+1);
-            roundTrip.setName( "Return trip of "+trip.getName());
+            roundTrip.setName(trip.getName()+" - Return");
             roundTrip.setSource(trip.getDestination());
             roundTrip.setDestination(trip.getSource());
             ArrayList<Notes> returnTripNotes= new ArrayList<>();
             Notes note = new Notes();
-            note.setContent("Return trip of "+trip.getName());
+            note.setContent(trip.getName()+" - Return");
             returnTripNotes.add(note);
             roundTrip.setNotes(returnTripNotes);
             roundTrip.setDate(returnCalendar.getTimeInMillis());
             roundTrip.setStatus("upcoming");
             dataBaseHandler.addTrip(roundTrip);
+            TaskManager.getInstance(getApplicationContext()).setTask(roundTrip);
 
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
@@ -174,6 +180,7 @@ public class ViewTrip extends AppCompatActivity {
             dataBaseHandler.deleteTrip(tripId);
 
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            TaskManager.getInstance(getApplicationContext()).deleteTask(tripId);
             startActivity(intent);
             //finish();
         }
@@ -182,7 +189,7 @@ public class ViewTrip extends AppCompatActivity {
     }
 
     public String tripNameFromLngLat(String fullName){
-        return fullName.substring(fullName.indexOf("#"),fullName.length());
+        return fullName.substring(fullName.indexOf("#")+1,fullName.length());
     }
 
 }

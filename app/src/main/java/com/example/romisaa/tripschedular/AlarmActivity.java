@@ -70,7 +70,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         trip = getIntent().getExtras().getParcelable("trip");
         nameString = trip.getName();
-        destinationString = trip.getDestination();
+        destinationString = tripNameFromLngLat(trip.getDestination());
 
         alarmTitle.setText(nameString);
         alarmDesc.setText("It's time for your trip to "+destinationString);
@@ -146,6 +146,10 @@ public class AlarmActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         //3ashan mantfdehsh :D
         outState.putString("aywaa","hassa");
+    }
+
+    public String tripNameFromLngLat(String fullName){
+        return fullName.substring(fullName.indexOf("#")+1,fullName.length());
     }
 
 }

@@ -68,27 +68,29 @@ public class ListArrayAdapter  extends ArrayAdapter{
     public String dateToString(long dateInLong){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(dateInLong);
-        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy - h:mm a");
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy - ");
+        String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
+        String time = (calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
 
         Calendar today = Calendar.getInstance();
         if(calendar.get(Calendar.YEAR)==today.get(Calendar.YEAR) &&
                 calendar.get(Calendar.MONTH)==today.get(Calendar.MONTH) &&
                 calendar.get(Calendar.DAY_OF_MONTH)==today.get(Calendar.DAY_OF_MONTH) ){
-            format = new SimpleDateFormat(" - h:mm a");
-            return("Today "+format.format(calendar.getTime()));
+            format = new SimpleDateFormat(" - ");
+            return("Today "+format.format(calendar.getTime())+time);
         }
 
         if(calendar.get(Calendar.YEAR)==today.get(Calendar.YEAR) &&
                 calendar.get(Calendar.MONTH)==today.get(Calendar.MONTH) &&
                 calendar.get(Calendar.DAY_OF_MONTH)+1==today.get(Calendar.DAY_OF_MONTH) ){
-            format = new SimpleDateFormat(" - h:mm a");
-            return("Yesterday "+format.format(calendar.getTime()));
+            format = new SimpleDateFormat(" - ");
+            return("Yesterday "+format.format(calendar.getTime())+time);
         }
         if(calendar.get(Calendar.YEAR)==today.get(Calendar.YEAR) &&
                 calendar.get(Calendar.MONTH)==today.get(Calendar.MONTH) &&
                 calendar.get(Calendar.DAY_OF_MONTH)-1==today.get(Calendar.DAY_OF_MONTH) ){
-            format = new SimpleDateFormat(" - h:mm a");
-            return("Tomorrow "+format.format(calendar.getTime()));
+            format = new SimpleDateFormat(" - ");
+            return("Tomorrow "+format.format(calendar.getTime())+time);
         }
 
         return format.format(calendar.getTime());

@@ -144,7 +144,7 @@ public class PastFragment extends Fragment {
                         // l object m3ak ya abo 5al eml l enta 3ayzo fi
                         Trip out= (Trip) mylistView.getItemAtPosition(listpostion);
                         Trip trip=new Trip();
-                        trip.setName("Round Trip of "+out.getName());
+                        trip.setName(out.getName()+" - Return");
                         trip.setSource(out.getDestination());
                         trip.setDuration((long) 0);
                         trip.setDestination(out.getSource());
@@ -166,6 +166,7 @@ public class PastFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Trip deleted= (Trip) mylistView.getItemAtPosition(listpostion);
                                         handler.deleteTrip(deleted.getId());
+                                        TaskManager.getInstance(getActivity()).deleteTask(pastTrips.get(listpostion).getId());
                                         pastTrips.remove(listpostion);
                                         adapter.notifyDataSetChanged();
                                     }
@@ -195,10 +196,17 @@ public class PastFragment extends Fragment {
 
         // delete from array
         // change status in db to done
-        Uri uri=Uri.parse("google.navigation:q="+trip.getDestination()+"&mode=d");
+        Uri uri=Uri.parse("google.navigation:q="+lnglatFromName(trip.getDestination())+"&mode=d");
         Intent intent=new Intent(Intent.ACTION_VIEW,uri);
         intent.setPackage("com.google.android.apps.maps");
         startActivity(intent);
+//        TaskManager.getInstance(getActivity()).deleteTask(trip.getId());
+    }
+
+
+
+    public String lnglatFromName(String tripName){
+        return tripName.substring(0,tripName.indexOf("#"));
     }
 
 }
