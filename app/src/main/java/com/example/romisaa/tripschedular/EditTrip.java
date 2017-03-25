@@ -91,10 +91,10 @@ public class EditTrip extends AppCompatActivity {
         PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
         placeAutocompleteFragment.setHint("Source");
         placeAutocompleteFragment2.setHint("destenation");
-        placeAutocompleteFragment.setText(newTrip.getSource());
+        placeAutocompleteFragment.setText(tripNameFromLngLat(newTrip.getSource()));
         strsource=newTrip.getSource();
         strdestination=newTrip.getDestination();
-        placeAutocompleteFragment2.setText(newTrip.getDestination());
+        placeAutocompleteFragment2.setText(tripNameFromLngLat(newTrip.getDestination()));
         placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -335,6 +335,9 @@ public class EditTrip extends AppCompatActivity {
         return true;
     }
 
+    public String tripNameFromLngLat(String fullName){
+        return fullName.substring(fullName.indexOf("#"),fullName.length());
+    }
 
 
 }
