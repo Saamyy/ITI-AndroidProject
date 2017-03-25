@@ -65,6 +65,7 @@ public class UpcomingFragment extends Fragment {
         mylistView= (SwipeMenuListView) view.findViewById(R.id.tripNames);
         adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow2,R.id.tripName,upCommingTrips);
         mylistView.setAdapter(adapter);
+        mylistView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
 
         mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,7 +89,7 @@ public class UpcomingFragment extends Fragment {
                 SwipeMenuItem startItem = new SwipeMenuItem(
                         getActivity());
                 // set item background
-                startItem.setBackground(new ColorDrawable(Color.rgb(0x00, 0xff, 0x00)));
+                startItem.setBackground(new ColorDrawable(Color.rgb(50, 205, 50)));
                 // set item width
                 startItem.setWidth((200));
                 // set item title
@@ -109,7 +110,7 @@ public class UpcomingFragment extends Fragment {
                 // set item width
                 deleteItem.setWidth((200));
                 // set item title
-                deleteItem.setTitle("delete");
+                deleteItem.setTitle("Delete");
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
