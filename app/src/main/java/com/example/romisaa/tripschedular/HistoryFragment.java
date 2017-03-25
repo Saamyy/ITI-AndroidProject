@@ -48,7 +48,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
     RootParser rootParser;
     ArrayList<Trip> trips;
     Double latitudeSource, longitudeSource, latitudeDest, longitudeDest;
-    PolylineOptions lineOptions;
+//    PolylineOptions lineOptions;
     private GoogleMap mMap;
 
     public HistoryFragment() {
@@ -73,7 +73,6 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
         rootParser = new RootParser();
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-        mapView.onResume();
         return view;
     }
 
@@ -87,6 +86,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
             String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + getLatLngFromName(trip.getSource()).latitude + "," + getLatLngFromName(trip.getSource()).longitude + "&destination=" + getLatLngFromName(trip.getDestination()).latitude + "," + getLatLngFromName(trip.getDestination()).longitude + "&key=AIzaSyBP0TBRYhcEWiIJhMM4GyoWWjWovszvGWk";
             draw(url);
         }
+        mapView.onResume();
     }
 
     public LatLng getLatLngFromName(String place) {
@@ -102,7 +102,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
 
     public void draw(String url) {
 
-        lineOptions = new PolylineOptions();
+        final ArrayList<LatLng> points = new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -112,7 +112,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                 List<List<HashMap<String, String>>> roots = rootParser.parse(response);
                 // Traversing through all the routes
                 for (int i = 0; i < roots.size(); i++) {
-                    ArrayList<LatLng> points = new ArrayList<>();
+
                     // Fetching i-th route
                     List<HashMap<String, String>> path = roots.get(i);
 
@@ -136,12 +136,12 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                     }
                     System.out.println("gwa el function     >" + points.get(2).longitude);
                     // Adding all the points in the route to LineOptions
-                    lineOptions.addAll(points);
-                    lineOptions.width(8);
-                    lineOptions.color(new Random().nextInt()+100);
+//                    lineOptions.addAll(points);
+//                    lineOptions.width(8);
+//                    lineOptions.color(new Random().nextInt()+100);
                     System.out.println("ana hena done gedan we kolo zy el fol");
                 }
-                mMap.addPolyline(lineOptions);
+                mMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(new Random().nextInt()+100));
                 mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeSource, longitudeSource)));
                 mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeDest, longitudeDest)));
                 Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
