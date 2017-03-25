@@ -51,11 +51,11 @@ public class ViewTrip extends AppCompatActivity {
         name=(TextView)  findViewById(R.id.nameValue);
         name.setText(trip.getName());
         sourceValue=(TextView)findViewById(R.id.sourceValue);
-        sourceValue.setText(trip.getSource());
+        sourceValue.setText(tripNameFromLngLat(trip.getSource()));
         System.out.println(trip.getStatus());
 
         destinationValue=(TextView)findViewById(R.id.destinationValue);
-        destinationValue.setText(trip.getDestination());
+        destinationValue.setText(tripNameFromLngLat(trip.getDestination()));
 
         date=(TextView)findViewById(R.id.dateValue);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -179,6 +179,10 @@ public class ViewTrip extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String tripNameFromLngLat(String fullName){
+        return fullName.substring(fullName.indexOf("#"),fullName.length());
     }
 
 }

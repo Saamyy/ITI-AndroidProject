@@ -195,8 +195,9 @@ public class AddTrip extends AppCompatActivity {
         placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-
-                AddTrip.this.strsource = place.getName().toString();
+                System.out.println("longitude and latitude : "+place.getLatLng().latitude+","+place.getLatLng().longitude);
+                String str=place.getLatLng().latitude+","+place.getLatLng().longitude+"#"+place.getName();
+                AddTrip.this.strsource = str;
 
             }
 
@@ -217,7 +218,9 @@ public class AddTrip extends AppCompatActivity {
         placeAutocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                AddTrip.this.strdestination = place.getName().toString();
+                System.out.println("longitude and latitude : "+place.getLatLng().latitude+","+place.getLatLng().longitude);
+                String str=place.getLatLng().latitude+","+place.getLatLng().longitude+"#"+place.getName();
+                AddTrip.this.strdestination = str;
             }
 
             @Override
