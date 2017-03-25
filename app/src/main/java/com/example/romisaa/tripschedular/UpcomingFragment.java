@@ -74,6 +74,9 @@ public class UpcomingFragment extends Fragment {
 
                 Intent intent=new Intent(view.getContext(),ViewTrip.class);
                 intent.putExtra("trip",upCommingTrips.get(position));
+                intent.putExtra("note",new Notes(1,"samyNote"));
+              //  System.out.println("l gy mn l upcoming "+upCommingTrips.get(position).getNotes().get(0).getContent());
+
                 startActivity(intent);
             }
         });
@@ -164,8 +167,10 @@ public class UpcomingFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Trip deleted= (Trip) mylistView.getItemAtPosition(listpostion);
                                         handler.deleteTrip(deleted.getId());
+                                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
                                         upCommingTrips.remove(listpostion);
                                         adapter.notifyDataSetChanged();
+
                                     }
                                 });
                                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",

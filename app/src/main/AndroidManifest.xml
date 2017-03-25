@@ -41,6 +41,7 @@
             android:name=".AddTrip"
             android:label="@string/title_activity_add_trip"
             android:parentActivityName=".MainActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.romisaa.tripschedular.MainActivity" />

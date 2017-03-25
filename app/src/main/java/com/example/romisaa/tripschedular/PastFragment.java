@@ -67,7 +67,9 @@ public class PastFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent=new Intent(view.getContext(),ViewTrip.class);
+                intent.putExtra("past","past");
                 intent.putExtra("trip",pastTrips.get(position));
+
                 startActivity(intent);
             }
         });
@@ -144,6 +146,7 @@ public class PastFragment extends Fragment {
                         Trip trip=new Trip();
                         trip.setName("Round Trip of "+out.getName());
                         trip.setSource(out.getDestination());
+                        trip.setDuration((long) 0);
                         trip.setDestination(out.getSource());
                         trip.setStatus("done");
                         trip.setDate(Calendar.getInstance().getTimeInMillis());

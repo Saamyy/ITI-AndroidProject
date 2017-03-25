@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -194,8 +195,9 @@ public class AddTrip extends AppCompatActivity {
         placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-
-                AddTrip.this.strsource = place.getName().toString();
+                System.out.println("longitude and latitude : "+place.getLatLng().latitude+","+place.getLatLng().longitude);
+                String str=place.getLatLng().latitude+","+place.getLatLng().longitude+"#"+place.getName();
+                AddTrip.this.strsource = str;
 
             }
 
@@ -216,7 +218,9 @@ public class AddTrip extends AppCompatActivity {
         placeAutocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                AddTrip.this.strdestination = place.getName().toString();
+                System.out.println("longitude and latitude : "+place.getLatLng().latitude+","+place.getLatLng().longitude);
+                String str=place.getLatLng().latitude+","+place.getLatLng().longitude+"#"+place.getName();
+                AddTrip.this.strdestination = str;
             }
 
             @Override
@@ -252,6 +256,8 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setName(String.valueOf(name.getText()));
                 newTrip.setSource(strsource);
                 newTrip.setDestination(strdestination);
+                //for testing onlyy
+                newTrip.setDuration((long) 0);
 
 //                in.setContent(String.valueOf(note.getText()));
                 for (EditText editText : notesEditTexts) {
@@ -265,7 +271,7 @@ public class AddTrip extends AppCompatActivity {
                 //  newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
                 newTrip.setNotes(tripNotes);
                 newTrip.setDate(calendar.getTimeInMillis());
-                newTrip.setStatus("upcoming");
+                newTrip.setStatus(Trip.STATUS_UPCOMING);
                 if (tripKind.isChecked()) {
                     // create new trip for round trip
                     Calendar returnCalendar = Calendar.getInstance();
@@ -277,6 +283,7 @@ public class AddTrip extends AppCompatActivity {
                     roundTrip.setName(String.valueOf(name.getText()) + " - Return");
                     roundTrip.setSource(strdestination);
                     roundTrip.setDestination(strsource);
+                    roundTrip.setDuration((long) 0);
                     Notes ins = new Notes();
                     ins.setContent("Return trip of " + name.getText());
                     rtripNotes.add(ins);

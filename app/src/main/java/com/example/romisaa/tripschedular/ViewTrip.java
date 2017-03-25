@@ -2,14 +2,25 @@ package com.example.romisaa.tripschedular;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,11 +29,16 @@ public class ViewTrip extends AppCompatActivity {
 
     TextView sourceValue;
     TextView destinationValue;
+    TextView name;
     TextView date;
     TextView time;
     TextView status;
     TextView notes;
     Trip trip;
+    TextView notesHeader;
+    LinearLayout notesdata;
+    Calendar calendar;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,28 +46,72 @@ public class ViewTrip extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent=getIntent();
-        trip=(Trip) intent.getParcelableExtra("trip");
+         trip=(Trip) intent.getParcelableExtra("trip");
+
+        name=(TextView)  findViewById(R.id.nameValue);
+        name.setText(trip.getName());
         sourceValue=(TextView)findViewById(R.id.sourceValue);
-        sourceValue.setText(trip.getSource());
+        sourceValue.setText(tripNameFromLngLat(trip.getSource()));
+        System.out.println(trip.getStatus());
+
         destinationValue=(TextView)findViewById(R.id.destinationValue);
-        destinationValue.setText(trip.getDestination());
+        destinationValue.setText(tripNameFromLngLat(trip.getDestination()));
+
         date=(TextView)findViewById(R.id.dateValue);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString = formatter.format(new Date(trip.getDate()));
+        date.setText(dateString);
+        System.out.println("l gy mn view "+trip.getDate()+" " );
+
         time=(TextView)findViewById(R.id.timeValue);
+        calendar=Calendar.getInstance();
+        calendar.setTimeInMillis(trip.getDate());
+        calendar.get(Calendar.HOUR_OF_DAY);
+        String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
+        time.setText(calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
+
         status=(TextView)findViewById(R.id.statusValue);
         status.setText(trip.getStatus());
-        notes=(TextView)findViewById(R.id.notesValue);
+
+        notesHeader=(TextView)findViewById(R.id.notes);
+        notesdata= (LinearLayout) findViewById(R.id.notesData);
+        if (trip.getNotes().size()==0)
+        {
+            notesHeader.setTextSize(20);
+            notesHeader.setText("There's no notes for that trip");
+
+        }
+        else {
+            for (int i = 0; i < trip.getNotes().size(); i++)
+            {
+                final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                TextView textView = new TextView(getApplicationContext());
+                textView.setLayoutParams(lparams);
+                textView.setSingleLine(false);  //TODO Check
+                textView.setTextColor(0xff000000);
+                textView.setInputType(InputType.TYPE_CLASS_TEXT);
+                textView.setTextSize(20);
+
+                textView.setText(trip.getNotes().get(i).getContent());
+
+            //Create Horizontal View
+                LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+                notesdata.addView(textView);
+             }
+
+        }
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if(intent.hasExtra("past"))
+        {
+            fab.setVisibility(View.GONE);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),EditTrip.class);
-
-                intent.putExtra("source",sourceValue.getText().toString());
-                intent.putExtra("destination",destinationValue.getText().toString());
-                intent.putExtra("date",date.getText().toString());
-                intent.putExtra("time",time.getText().toString());
-                intent.putExtra("status",status.getText().toString());
-                intent.putExtra("notes",notes.getText().toString());
+                intent.putExtra("trip",trip);
                 startActivity(intent);
             }
         });
@@ -119,6 +179,10 @@ public class ViewTrip extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String tripNameFromLngLat(String fullName){
+        return fullName.substring(fullName.indexOf("#"),fullName.length());
     }
 
 }

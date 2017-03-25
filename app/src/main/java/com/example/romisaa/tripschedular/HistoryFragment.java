@@ -82,27 +82,26 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
         super.onResume();
         trips = new DataBaseHandler(getActivity().getApplicationContext()).getallHistoryTrips();
         for (Trip trip : trips) {
-            getLatLngFromName(trip.getSource());
-            getLatLngFromName(trip.getDestination());
-            String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + getLatLngFromName(trip.getSource()).latitude + "," + getLatLngFromName(trip.getSource()).longitude + "&destination=" + getLatLngFromName(trip.getDestination()).latitude + "," + getLatLngFromName(trip.getDestination()).longitude + "&key=AIzaSyBP0TBRYhcEWiIJhMM4GyoWWjWovszvGWk";
+//            getLatLngFromName(trip.getSource());
+//            getLatLngFromName(trip.getDestination());
+            String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lnglatFromName(trip.getSource()) + "&destination=" + lnglatFromName(trip.getDestination()) + "&key=AIzaSyBP0TBRYhcEWiIJhMM4GyoWWjWovszvGWk";
             draw(url);
         }
     }
 
-    public LatLng getLatLngFromName(String place) {
-        try {
-            List<Address> adresses = new Geocoder(getActivity().getApplicationContext()).getFromLocationName(place, 5);
-            LatLng latLng = new LatLng(adresses.get(0).getLatitude(), adresses.get(0).getLongitude());
-            return latLng;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public LatLng getLatLngFromName(String place) {
+//        try {
+//            List<Address> adresses = new Geocoder(getActivity().getApplicationContext()).getFromLocationName(place, 5);
+//            LatLng latLng = new LatLng(adresses.get(0).getLatitude(), adresses.get(0).getLongitude());
+//            return latLng;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     public void draw(String url) {
-
-        lineOptions = new PolylineOptions();
+        final ArrayList<LatLng> points= new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -112,7 +111,6 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                 List<List<HashMap<String, String>>> roots = rootParser.parse(response);
                 // Traversing through all the routes
                 for (int i = 0; i < roots.size(); i++) {
-                    ArrayList<LatLng> points = new ArrayList<>();
                     // Fetching i-th route
                     List<HashMap<String, String>> path = roots.get(i);
 
@@ -136,12 +134,12 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                     }
                     System.out.println("gwa el function     >" + points.get(2).longitude);
                     // Adding all the points in the route to LineOptions
-                    lineOptions.addAll(points);
-                    lineOptions.width(8);
-                    lineOptions.color(new Random().nextInt()+100);
+//                    lineOptions.addAll(points);
+//                    lineOptions.width(8);
+//                    lineOptions.color(new Random().nextInt()+100);
                     System.out.println("ana hena done gedan we kolo zy el fol");
                 }
-                mMap.addPolyline(lineOptions);
+                mMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(new Random().nextInt()+100));
                 mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeSource, longitudeSource)));
                 mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeDest, longitudeDest)));
                 Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
@@ -161,5 +159,13 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
         mMap=googleMap;
         System.out.println("ana ready fel map");
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(26.8206, 30.8025), 5));
+    }
+
+    public String lnglatFromName(String tripName){
+        return tripName.substring(0,tripName.indexOf("#"));
+    }
+
+    public String tripNameFromLngLat(String fullName){
+        return fullName.substring(fullName.indexOf("#"),fullName.length()+1);
     }
 }

@@ -170,7 +170,7 @@ public class DataBaseHandler {
         ContentValues values = new ContentValues();
         values.put(CONTENT,updatedNote.getContent());
         // updating row
-        return db.update(TABLE_TRIPS, values, TRIP_ID + " = ?",
+        return db.update(TABLE_NOTES, values, TRIP_ID + "=?",
                 new String[] { String.valueOf(updatedNote.getNoteId()) });
 
     }
