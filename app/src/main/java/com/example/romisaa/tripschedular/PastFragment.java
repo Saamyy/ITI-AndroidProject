@@ -58,7 +58,7 @@ public class PastFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_past, container, false);
         mylistView= (SwipeMenuListView) view.findViewById(R.id.pastTrips);
-        adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow,R.id.tripName,pastTrips);
+        adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow2,R.id.tripName,pastTrips);
         mylistView.setAdapter(adapter);
 
         mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,7 +67,9 @@ public class PastFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent=new Intent(view.getContext(),ViewTrip.class);
+                intent.putExtra("past","past");
                 intent.putExtra("trip",pastTrips.get(position));
+
                 startActivity(intent);
             }
         });
@@ -143,6 +145,7 @@ public class PastFragment extends Fragment {
                         Trip trip=new Trip();
                         trip.setName("Round Trip of "+out.getName());
                         trip.setSource(out.getDestination());
+                        trip.setDuration((long) 0);
                         trip.setDestination(out.getSource());
                         trip.setStatus("done");
                         trip.setDate(Calendar.getInstance().getTimeInMillis());

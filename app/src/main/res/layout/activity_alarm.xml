@@ -11,6 +11,23 @@
     tools:context="com.example.romisaa.tripschedular.AlarmActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarmTitle"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="It's time for your trip to Elsembellawen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarmDesc"
+        android:gravity="center"
+        android:padding="10dp" />
+
     <Button
         android:text="Start"
         android:layout_width="match_parent"

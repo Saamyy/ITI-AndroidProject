@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -87,10 +89,10 @@ public class AddTrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
-        sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
         //Filling Data
         calendar = Calendar.getInstance();
-        String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         String myFormat = "MMM dd, yyyy";
         SimpleDateFormat sdformat = new SimpleDateFormat(myFormat);
 
@@ -111,7 +113,7 @@ public class AddTrip extends AppCompatActivity {
         tripKind = (CheckBox) findViewById(R.id.kind);
 
         date.setText(sdformat.format(calendar.getTime()));
-        time.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " " + am_pm);
+        time.setText(timeFormat.format(calendar.getTime()));
 
         date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -145,7 +147,8 @@ public class AddTrip extends AppCompatActivity {
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             calendar.set(Calendar.MINUTE, minute);
-                            time.setText(hourOfDay + ":" + minute);
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+                            time.setText(timeFormat.format(calendar.getTime()));
                             Toast.makeText(AddTrip.this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }, hours, minutes, false);
@@ -159,25 +162,36 @@ public class AddTrip extends AppCompatActivity {
         addNoteBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating Edit Text
-                final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                EditText editText = new EditText(getApplicationContext());
-                editText.setLayoutParams(lparams);
-                editText.setSingleLine(false);  //TODO Check
-                editText.setTextColor(0xff000000);
-                editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                editText.setText("Note ..");
-                notesEditTexts.add(editText);
-                //Creating Button
 
-                //Create Horizontal View
-                LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-                mLayout.addView(editText);
+                for (EditText editText : notesEditTexts) {
+                    if (editText.getText().toString().trim().equals(""))
+                        return;
+                }
+                {//Creating Edit Text
+                    final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    EditText editText = new EditText(getApplicationContext());
+                    editText.setLayoutParams(lparams);
+                    editText.setSingleLine(false);  //TODO Check
+                    editText.setTextColor(0xff000000);
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    editText.setHint("Note ..");
+                    editText.setHintTextColor(Color.DKGRAY);
+                    notesEditTexts.add(editText);
+                    //Creating Button
+
+                    //Create Horizontal View
+                    LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+                    mLayout.addView(editText);
+                }
             }
         });
 
-        PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
-        PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+        final PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
+        final PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+
+        placeAutocompleteFragment.setHint("Choose source");
+        placeAutocompleteFragment2.setHint("Choose destination");
+
         placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -191,6 +205,15 @@ public class AddTrip extends AppCompatActivity {
 
             }
         });
+
+        placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_clear_button).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                placeAutocompleteFragment.setText("");
+                AddTrip.this.strsource = "";
+            }
+        });
+
         placeAutocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -203,6 +226,15 @@ public class AddTrip extends AppCompatActivity {
             }
         });
 
+        placeAutocompleteFragment2.getView().findViewById(R.id.place_autocomplete_clear_button).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                placeAutocompleteFragment2.setText("");
+                AddTrip.this.strdestination = "";
+            }
+        });
+
+
         newTrip = new Trip();
         tripNotes = new ArrayList<>();
         rtripNotes = new ArrayList<>();
@@ -212,7 +244,7 @@ public class AddTrip extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(!validateTrip())
+                if (!validateTrip())
                     return;
 
                 DataBaseHandler handler = new DataBaseHandler(getApplicationContext());
@@ -221,34 +253,46 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setName(String.valueOf(name.getText()));
                 newTrip.setSource(strsource);
                 newTrip.setDestination(strdestination);
+                //for testing onlyy
+                newTrip.setDuration((long) 0);
 
 //                in.setContent(String.valueOf(note.getText()));
                 for (EditText editText : notesEditTexts) {
                     Notes note = new Notes();
-                    note.setContent(editText.getText().toString());
-                    tripNotes.add(note);
+                    if (editText != null && editText.getText() != null && !editText.getText().toString().trim().equals("")) {
+                        note.setContent(editText.getText().toString());
+                        tripNotes.add(note);
+                    }
                 }
 
-              //  newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
+                //  newTrip.setNotes(tripNotes.toArray(new Notes[tripNotes.size()]));
                 newTrip.setNotes(tripNotes);
                 newTrip.setDate(calendar.getTimeInMillis());
-                newTrip.setStatus("upcoming");
+                newTrip.setStatus(Trip.STATUS_UPCOMING);
                 if (tripKind.isChecked()) {
                     // create new trip for round trip
+                    Calendar returnCalendar = Calendar.getInstance();
+                    returnCalendar.setTimeInMillis(calendar.getTimeInMillis());
+                    returnCalendar.set(Calendar.HOUR_OF_DAY, returnCalendar.get(Calendar.HOUR_OF_DAY) + 2);
+
                     Trip roundTrip = new Trip();
-                    roundTrip.setName("Round trip of " + String.valueOf(name.getText()));
+                    roundTrip.setId((int) System.currentTimeMillis() + 1);
+                    roundTrip.setName(String.valueOf(name.getText()) + " - Return");
                     roundTrip.setSource(strdestination);
                     roundTrip.setDestination(strsource);
+                    roundTrip.setDuration((long) 0);
                     Notes ins = new Notes();
-                    ins.setContent(String.valueOf(note.getText()));
+                    ins.setContent("Return trip of " + name.getText());
                     rtripNotes.add(ins);
                     roundTrip.setNotes(tripNotes);
-                    roundTrip.setDate(calendar.getTimeInMillis());
+                    roundTrip.setDate(returnCalendar.getTimeInMillis());
                     roundTrip.setStatus("upcoming");
+                    TaskManager.getInstance(getApplicationContext()).setTask(roundTrip);
                     handler.addTrip(roundTrip);
                 }
                 handler.addTrip(newTrip);
                 TaskManager.getInstance(getApplicationContext()).setTask(newTrip);
+                finishAffinity();
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
 
@@ -257,7 +301,7 @@ public class AddTrip extends AppCompatActivity {
 
                 //TODO delete - Just for testing
                 for (Notes note : newTrip.getNotes()) {
-                    Log.i("MyTag",note.getContent());
+                    Log.i("MyTag", note.getContent());
                 }
             }
         });
@@ -266,23 +310,21 @@ public class AddTrip extends AppCompatActivity {
 
     private boolean validateTrip() {
 
-        if(name.getText().toString().trim().equals("")){
+        if (name.getText().toString().trim().equals("")) {
             Toast.makeText(this, "Your trip must have a name", Toast.LENGTH_SHORT).show();
             return false;
         }
 
 
-
-        if(strsource==null || strsource.trim().equals("")){
+        if (strsource == null || strsource.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if(strdestination==null || strdestination.trim().equals("")){
+        if (strdestination == null || strdestination.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
             return false;
         }
-
         if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             Toast.makeText(AddTrip.this, "Time specified already passed", Toast.LENGTH_SHORT).show();
             return false;
