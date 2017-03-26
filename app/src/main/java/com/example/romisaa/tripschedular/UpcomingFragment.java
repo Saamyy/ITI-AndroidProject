@@ -153,7 +153,6 @@ public class UpcomingFragment extends Fragment {
                         upCommingTrips.remove(listpostion);
                         adapter.notifyDataSetChanged();
                         startNavigation(out);
-                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
                          //Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
@@ -204,7 +203,7 @@ public class UpcomingFragment extends Fragment {
 
         // delete from array
         // change status in db to done
-        Uri uri=Uri.parse("google.navigation:q="+lnglatFromName(trip.getDestination())+"&mode=d");
+        Uri uri=Uri.parse("google.navigation:q="+lnglatFromName(trip.getDestination()+"&mode=d"));
         Intent intent=new Intent(Intent.ACTION_VIEW,uri);
         intent.setPackage("com.google.android.apps.maps");
         startActivity(intent);
