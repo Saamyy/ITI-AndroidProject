@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                 ArrayList<Trip> trips = dataBaseHandler.getallTrips();
                 final String tripJson = gson.toJson(trips);
 
-                String url = "http://192.168.1.4:5030/tripSchedularBackEnd/SynchServlet";
+                String url = "https://samybackend.herokuapp.com/SynchServlet";
                 StringRequest stringRequest = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

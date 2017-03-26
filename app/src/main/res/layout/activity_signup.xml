@@ -53,7 +53,7 @@
             android:layout_marginTop="40dp"
             android:id="@+id/loginBtn"
             android:background="@color/colorPrimary"
-            android:textColor="@color/cast_expanded_controller_ad_container_white_stripe_color" />
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
 
     <TextView
