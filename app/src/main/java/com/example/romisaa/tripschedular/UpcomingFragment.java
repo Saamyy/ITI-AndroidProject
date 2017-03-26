@@ -150,10 +150,11 @@ public class UpcomingFragment extends Fragment {
                         // l object m3ak ya abo 5al eml l enta 3ayzo fi
                         Trip out= (Trip) mylistView.getItemAtPosition(listpostion);
                         handler.changeStatus(out.getId(),"done");
+                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
                         upCommingTrips.remove(listpostion);
                         adapter.notifyDataSetChanged();
                         startNavigation(out);
-                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
+
                          //Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
