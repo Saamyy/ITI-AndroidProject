@@ -119,8 +119,11 @@ public class ViewTrip extends AppCompatActivity {
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(getIntent().hasExtra("past"))
+            return false;
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -128,6 +131,8 @@ public class ViewTrip extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (getIntent().hasExtra("past"))
+            return false;
 
         DataBaseHandler dataBaseHandler=new DataBaseHandler(getApplicationContext());
         int id = item.getItemId();

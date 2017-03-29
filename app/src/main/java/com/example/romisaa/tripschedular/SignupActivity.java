@@ -1,5 +1,6 @@
 package com.example.romisaa.tripschedular;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class SignupActivity extends AppCompatActivity {
     TextView link;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -73,6 +75,7 @@ public class SignupActivity extends AppCompatActivity {
                             editor.putString("password",passwordEditText.getText().toString());
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                          //  progressDialog.dismiss();
                             startActivity(intent);
                         }
                         else{
@@ -89,6 +92,13 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
+/*
+                progressDialog = new ProgressDialog(SignupActivity.this.get);
+                progressDialog.setMessage("LoaDing....");
+                progressDialog.show();
+*/
+
+
 
             }
         });

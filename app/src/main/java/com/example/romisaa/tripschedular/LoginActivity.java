@@ -1,5 +1,6 @@
 package com.example.romisaa.tripschedular;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     Gson gson;
     int  RC_SIGN_IN=0;
     LinearLayout mLayout;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -97,6 +99,9 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                         if (response.equals("not exist")){
                             //TODO
                             // error message for user that invalid email or password
+                            progressDialog.dismiss();
+
+                            Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -116,6 +121,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                             editor.putString("password",passwordEditText.getText().toString());
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                            progressDialog.dismiss();
                             startActivity(intent);
 //                            System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                         }
@@ -125,10 +131,15 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
+                //initialize the progress dialog and show it
+                progressDialog = new ProgressDialog(getApplicationContext());
+                progressDialog.setMessage("LoaDing....");
+                progressDialog.show();
 
             }
         });
