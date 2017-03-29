@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C6002D"
+        android:background="#C6002D"
     android:weightSum="1">
 
 
@@ -16,16 +16,15 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="TextView"
+        android:text="WE WILL TAKE YOU THERE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="97dp"
         android:id="@+id/textView"
-        android:textSize="150px"
+        android:textSize="80px"
         android:textColor="@color/cast_expanded_controller_progress_text_color"
         android:textStyle="bold"
         android:layout_below="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
