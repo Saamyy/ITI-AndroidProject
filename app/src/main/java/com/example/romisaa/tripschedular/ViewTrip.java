@@ -1,6 +1,7 @@
 package com.example.romisaa.tripschedular;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.text.InputType;
@@ -89,11 +91,12 @@ public class ViewTrip extends AppCompatActivity {
                 final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 TextView textView = new TextView(getApplicationContext());
                 textView.setLayoutParams(lparams);
+                textView.setPadding(20, 0, 20, 5);
                 textView.setSingleLine(false);  //TODO Check
-                textView.setTextColor(0xff000000);
+//                textView.setTextColor(Color.argb(255,255,68,68));
+                textView.setTextColor(Color.BLACK);
                 textView.setInputType(InputType.TYPE_CLASS_TEXT);
-                textView.setTextSize(20);
-
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView.setText(trip.getNotes().get(i).getContent());
 
             //Create Horizontal View

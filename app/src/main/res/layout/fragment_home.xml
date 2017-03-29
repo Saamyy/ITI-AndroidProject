@@ -1,14 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.romisaa.tripschedular.HomeFragment">
+    tools:context="com.example.romisaa.tripschedular.HomeFragment"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="This is our goddamn home"
-        android:textSize="36sp" />
+        android:text="Temporary Home"
+        android:textSize="36sp"
+        android:gravity="center" />
 
-</FrameLayout>
+</LinearLayout>
