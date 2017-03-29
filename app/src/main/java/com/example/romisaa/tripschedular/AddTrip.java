@@ -319,7 +319,6 @@ public class AddTrip extends AppCompatActivity {
             return false;
         }
 
-/*
         if (strsource == null || strsource.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
             return false;
@@ -328,7 +327,7 @@ public class AddTrip extends AppCompatActivity {
         if (strdestination == null || strdestination.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
             return false;
-        }*/
+        }
         if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             Toast.makeText(AddTrip.this, "Time specified already passed", Toast.LENGTH_SHORT).show();
             return false;
