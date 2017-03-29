@@ -144,15 +144,18 @@ public class ViewTrip extends AppCompatActivity {
             intent.setPackage("com.google.android.apps.maps");
             dataBaseHandler.changeStatus(trip.getId(),"done");
             TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
+            finishAffinity();
+            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(homeIntent);
             startActivity(intent);
+
 
         }
         if (id == R.id.mark_done) {
 
             dataBaseHandler.changeStatus(trip.getId(),"done");
             TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            finish();
            // finish();
         }
         if (id == R.id.assign_back_trip) {
@@ -174,8 +177,7 @@ public class ViewTrip extends AppCompatActivity {
             dataBaseHandler.addTrip(roundTrip);
             TaskManager.getInstance(getApplicationContext()).setTask(roundTrip);
 
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            finish();
             //finish();
 
         }
@@ -186,7 +188,7 @@ public class ViewTrip extends AppCompatActivity {
 
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             TaskManager.getInstance(getApplicationContext()).deleteTask(tripId);
-            startActivity(intent);
+            finish();
             //finish();
         }
 

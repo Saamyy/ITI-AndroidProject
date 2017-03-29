@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             System.out.println(sharedPreferences.getString("email",null));
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
         mLayout = (LinearLayout) findViewById(R.id.activity_login);
@@ -99,9 +100,9 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                         if (response.equals("not exist")){
                             //TODO
                             // error message for user that invalid email or password
-                            progressDialog.dismiss();
 
-                            Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                         else
                         {
@@ -119,10 +120,11 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                             }
                             editor.putString("email",emailEditText.getText().toString());
                             editor.putString("password",passwordEditText.getText().toString());
+                            progressDialog.dismiss();
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                            progressDialog.dismiss();
                             startActivity(intent);
+                            finish();
 //                            System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                         }
 
@@ -131,16 +133,13 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
-                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
-                //initialize the progress dialog and show it
-                progressDialog = new ProgressDialog(getApplicationContext());
-                progressDialog.setMessage("LoaDing....");
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Fetching Data");
                 progressDialog.show();
-
             }
         });
 
@@ -169,6 +168,10 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Fetching Data");
+                progressDialog.show();
+
             }
         });
 
@@ -221,6 +224,8 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     if (response.equals("not exist")){
                         //TODO
                         // error message for user that invalid email or password
+                        progressDialog.dismiss();
+
                     }
                     else
                     {
@@ -240,7 +245,9 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                         editor.commit();
                         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
-                        System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
+                        progressDialog.dismiss();
+                        finish();
+//                        System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                     }
 
                 }

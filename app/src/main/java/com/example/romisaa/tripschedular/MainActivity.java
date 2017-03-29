@@ -3,11 +3,11 @@ package com.example.romisaa.tripschedular;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +17,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     Gson gson;
     SharedPreferences sharedPreferences;
     String currentFragment = "home";
+    ProgressDialog progressDialog;
 
     @Override
     protected void onStart() {
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
                 trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
                 trns.commit();
                 getSupportActionBar().setTitle("Home");
+                MainActivity.this.currentFragment = "home";
             }
 
         }
@@ -152,12 +153,14 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onResponse(String response) {
                         System.out.println("success " + response);
-                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        //  Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -170,6 +173,9 @@ public class MainActivity extends AppCompatActivity
                     }
                 };
                 singleton.addToRequestQueue(stringRequest);
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setMessage("Fetching Data");
+                progressDialog.show();
             }
         });
 
@@ -188,9 +194,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.past) {
             fragment = new PastFragment();
             getSupportActionBar().setTitle("Past Trips");
+            currentFragment = "past";
         } else if (id == R.id.history) {
             fragment = new HistoryFragment();
             getSupportActionBar().setTitle("History");
+            currentFragment = "history";
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about) {
@@ -243,9 +251,19 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction trns = mgr.beginTransaction();
             switch (currentFragment) {
                 case "upcoming":
-                    trns.replace(R.id.content_main, new UpcomingFragment(), "upcoming_fragment");
+                    trns.replace(R.id.content_main, new UpcomingFragment());
                     trns.commit();
                     getSupportActionBar().setTitle("Upcoming Trips");
+                    break;
+                case "past":
+                    trns.replace(R.id.content_main, new PastFragment());
+                    trns.commit();
+                    getSupportActionBar().setTitle("Past Trips");
+                    break;
+                case "history":
+                    trns.replace(R.id.content_main, new HistoryFragment());
+                    trns.commit();
+                    getSupportActionBar().setTitle("History");
                     break;
                 case "home":
                     trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
