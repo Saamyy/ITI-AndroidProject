@@ -76,7 +76,8 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".SignupActivity" />
+        <activity android:name=".SignupActivity">
+            </activity>
 
         <activity android:name=".SplashScreen">
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
