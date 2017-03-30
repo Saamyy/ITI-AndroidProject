@@ -42,6 +42,7 @@ public class SignupActivity extends AppCompatActivity {
             System.out.println(sharedPreferences.getString("email",null));
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
+            finishAffinity();
         }
         link = (TextView) findViewById(R.id.linkToLogin);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
@@ -69,7 +70,7 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.i("MyTag","success");
-                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                         if(response.equals("done")){
                             editor.putString("email",emailEditText.getText().toString());
                             editor.putString("password",passwordEditText.getText().toString());
@@ -77,11 +78,12 @@ public class SignupActivity extends AppCompatActivity {
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                            progressDialog.dismiss();
                             startActivity(intent);
+                            finishAffinity();
                         }
                         else{
                             //TODO
                             //hntl3 error msg ll user (user already exists)
-                            Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
