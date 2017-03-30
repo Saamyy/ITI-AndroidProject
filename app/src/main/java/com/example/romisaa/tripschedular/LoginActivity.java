@@ -10,6 +10,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,6 +57,10 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+//Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
         editor=sharedPreferences.edit();
@@ -134,6 +140,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
                         Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
