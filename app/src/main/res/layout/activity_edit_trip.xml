@@ -23,7 +23,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_view_trip" />
+
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
