@@ -49,6 +49,7 @@ public class UpcomingFragment extends Fragment {
         upCommingTrips=new ArrayList<>();
         upCommingTrips=handler.getAllUpcommingTrips();
 
+
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

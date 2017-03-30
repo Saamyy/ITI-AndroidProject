@@ -1,12 +1,17 @@
 package com.example.romisaa.tripschedular;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class LoginActivity extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener{
@@ -41,14 +47,20 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     SharedPreferences.Editor editor;
     Singleton singleton;
     RequestQueue requestQueue;
+    TaskManager taskManager;
     Gson gson;
     int  RC_SIGN_IN=0;
     LinearLayout mLayout;
+    ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+//Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
         editor=sharedPreferences.edit();
@@ -60,6 +72,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             System.out.println(sharedPreferences.getString("email",null));
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
         mLayout = (LinearLayout) findViewById(R.id.activity_login);
@@ -82,8 +95,9 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                 }
 
                 //TODO Send Mail & Password To Servlet
-                String url="http://192.168.0.100:8082/tripSchedularBackEnd/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="https://samybackend.herokuapp.com/LoginServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
                 StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onResponse(String response) {
                         System.out.println("ana fel response "+response);
@@ -92,18 +106,31 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                         if (response.equals("not exist")){
                             //TODO
                             // error message for user that invalid email or password
+
+                            Toast.makeText(LoginActivity.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                         else
                         {
                             trips = gson.fromJson(response, type);
+                            taskManager=TaskManager.getInstance(getApplicationContext());
                             for (Trip trip : trips  ) {
+                                if(trip.getDate()>= Calendar.getInstance().getTimeInMillis()){
+                                    taskManager.setTask(trip);
+                                }
+                                else
+                                {
+                                    trip.setStatus("done");
+                                }
                                 new DataBaseHandler(getApplicationContext()).addTrip(trip);
                             }
                             editor.putString("email",emailEditText.getText().toString());
                             editor.putString("password",passwordEditText.getText().toString());
+                            progressDialog.dismiss();
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
+                            finish();
 //                            System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                         }
 
@@ -113,10 +140,13 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
                         Toast.makeText(LoginActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
-
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Fetching Data");
+                progressDialog.show();
             }
         });
 
@@ -125,6 +155,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -145,6 +176,10 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Fetching Data");
+                progressDialog.show();
+
             }
         });
 
@@ -162,6 +197,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("mafesh connectiom 3lya l ne3ma ");
         Toast.makeText(this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
     }
     //google
     @Override
@@ -186,8 +222,9 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
           //  mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             System.out.println("user name: "+acct.getDisplayName());
             System.out.println("email:"+ acct.getEmail());
-            String url="http://192.168.0.100:8082/tripSchedularBackEnd/LoginServlet?email="+acct.getEmail()+"&flag=app";
+            String url="https://samybackend.herokuapp.com/LoginServlet?email="+acct.getEmail()+"&flag=app";
             StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onResponse(String response) {
                     System.out.println(response);
@@ -196,18 +233,30 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     if (response.equals("not exist")){
                         //TODO
                         // error message for user that invalid email or password
+                        progressDialog.dismiss();
+
                     }
                     else
                     {
                         trips = gson.fromJson(response, type);
+                        taskManager=TaskManager.getInstance(getApplicationContext());
                         for (Trip trip : trips  ) {
+                            if(trip.getDate()>= Calendar.getInstance().getTimeInMillis()){
+                                taskManager.setTask(trip);
+                            }
+                            else
+                            {
+                                trip.setStatus("done");
+                            }
                             new DataBaseHandler(getApplicationContext()).addTrip(trip);
                         }
                         editor.putString("email",acct.getEmail());
                         editor.commit();
                         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
-                        System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
+                        progressDialog.dismiss();
+                        finishAffinity();
+//                        System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                     }
 
                 }

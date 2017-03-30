@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.romisaa.tripschedular.LoginActivity"
+    android:background="#C6002D"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -16,25 +17,42 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="50px"
         android:gravity="center">
 
-        <android.support.design.widget.TextInputLayout
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src ="@drawable/splash2"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingTop="50px"
+            >
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:ems="10"
+                android:textSize="50px"
                 android:id="@+id/emailEditText"
-                android:hint="Email"
+                android:hint=" Email"
+                android:background="@drawable/rounded_border_edittext"
                 android:layout_weight="1" />
-        </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingTop="30px"
+            >
 
             <EditText
                 android:layout_width="match_parent"
@@ -42,16 +60,18 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/passwordEditText"
+                android:textSize="50px"
                 android:hint="Password"
+                android:background="@drawable/rounded_border_edittext"
                 android:layout_weight="1" />
-        </android.support.design.widget.TextInputLayout>
 
+                </LinearLayout>
         <Button
             android:text="Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/loginBtn"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:background="@color/colorPrimary"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
@@ -69,7 +89,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/linkToSignup"
         android:textAlignment="center"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/colorPrimary" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/cast_expanded_controller_text_color" />
 
 </LinearLayout>

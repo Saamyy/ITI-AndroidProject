@@ -1,6 +1,7 @@
 package com.example.romisaa.tripschedular;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.text.InputType;
@@ -89,11 +91,12 @@ public class ViewTrip extends AppCompatActivity {
                 final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 TextView textView = new TextView(getApplicationContext());
                 textView.setLayoutParams(lparams);
+                textView.setPadding(20, 0, 20, 5);
                 textView.setSingleLine(false);  //TODO Check
-                textView.setTextColor(0xff000000);
+//                textView.setTextColor(Color.argb(255,255,68,68));
+                textView.setTextColor(Color.BLACK);
                 textView.setInputType(InputType.TYPE_CLASS_TEXT);
-                textView.setTextSize(20);
-
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView.setText(trip.getNotes().get(i).getContent());
 
             //Create Horizontal View
@@ -119,8 +122,11 @@ public class ViewTrip extends AppCompatActivity {
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(getIntent().hasExtra("past"))
+            return false;
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -128,6 +134,8 @@ public class ViewTrip extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (getIntent().hasExtra("past"))
+            return false;
 
         DataBaseHandler dataBaseHandler=new DataBaseHandler(getApplicationContext());
         int id = item.getItemId();
@@ -139,15 +147,18 @@ public class ViewTrip extends AppCompatActivity {
             intent.setPackage("com.google.android.apps.maps");
             dataBaseHandler.changeStatus(trip.getId(),"done");
             TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
+            finishAffinity();
+            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(homeIntent);
             startActivity(intent);
+
 
         }
         if (id == R.id.mark_done) {
 
             dataBaseHandler.changeStatus(trip.getId(),"done");
             TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            finish();
            // finish();
         }
         if (id == R.id.assign_back_trip) {
@@ -169,8 +180,7 @@ public class ViewTrip extends AppCompatActivity {
             dataBaseHandler.addTrip(roundTrip);
             TaskManager.getInstance(getApplicationContext()).setTask(roundTrip);
 
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            finish();
             //finish();
 
         }
@@ -181,7 +191,7 @@ public class ViewTrip extends AppCompatActivity {
 
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             TaskManager.getInstance(getApplicationContext()).deleteTask(tripId);
-            startActivity(intent);
+            finish();
             //finish();
         }
 

@@ -1,11 +1,14 @@
 package com.example.romisaa.tripschedular;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,11 +27,16 @@ public class SignupActivity extends AppCompatActivity {
     TextView link;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+//Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_signup);
         sharedPreferences=getSharedPreferences("user",MODE_PRIVATE);
         editor=sharedPreferences.edit();
@@ -40,6 +48,7 @@ public class SignupActivity extends AppCompatActivity {
             System.out.println(sharedPreferences.getString("email",null));
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
+            finishAffinity();
         }
         link = (TextView) findViewById(R.id.linkToLogin);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
@@ -61,24 +70,26 @@ public class SignupActivity extends AppCompatActivity {
 
                 //TODO Send Mail & Password To Servlet
                 Log.i("MyTag","");
-                String url="http://192.168.0.100:8082/tripSchedularBackEnd/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+                String url="https://samybackend.herokuapp.com/SignupServlet?email="+emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
 
                  StringRequest stringRequest=new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i("MyTag","success");
-                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                         if(response.equals("done")){
                             editor.putString("email",emailEditText.getText().toString());
                             editor.putString("password",passwordEditText.getText().toString());
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                           progressDialog.dismiss();
                             startActivity(intent);
+                            finishAffinity();
                         }
                         else{
                             //TODO
                             //hntl3 error msg ll user (user already exists)
-                            Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -89,6 +100,13 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
+
+               progressDialog = new ProgressDialog(SignupActivity.this);
+                progressDialog.setMessage("LoaDing....");
+               progressDialog.show();
+
+
+
 
             }
         });
@@ -113,4 +131,11 @@ public class SignupActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 }

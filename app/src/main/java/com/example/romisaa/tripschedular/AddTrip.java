@@ -295,10 +295,11 @@ public class AddTrip extends AppCompatActivity {
                 }
                 handler.addTrip(newTrip);
                 TaskManager.getInstance(getApplicationContext()).setTask(newTrip);
-                finishAffinity();
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
+//                finishAffinity();
+//                Intent intent = new Intent(view.getContext(), MainActivity.class);
+//                startActivity(intent);
 
+                finish();
                 Log.i("MyTag", String.valueOf(newTrip.getDate()));
 
 
@@ -317,7 +318,6 @@ public class AddTrip extends AppCompatActivity {
             Toast.makeText(this, "Your trip must have a name", Toast.LENGTH_SHORT).show();
             return false;
         }
-
 
         if (strsource == null || strsource.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
@@ -339,8 +339,8 @@ public class AddTrip extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        startActivity(intent);
     }
 }
 

@@ -3,6 +3,7 @@ package com.example.romisaa.tripschedular;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -39,14 +41,13 @@ public class MainActivity extends AppCompatActivity
     RequestQueue requestQueue;
     Gson gson;
     SharedPreferences sharedPreferences;
+    String currentFragment = "home";
+    ProgressDialog progressDialog;
 
     @Override
     protected void onStart() {
         super.onStart();
-        FragmentManager mgr = getFragmentManager();
-        FragmentTransaction trns = mgr.beginTransaction();
-        trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
-        trns.commit();
+        Log.i("MyTag",currentFragment+" onstart");
     }
 
     @Override
@@ -78,7 +79,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        FragmentManager mgr = getFragmentManager();
+        FragmentTransaction trns = mgr.beginTransaction();
+
+        trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
+        trns.commit();
+        getSupportActionBar().setTitle("Home");
+        currentFragment = "home";
     }
+
 
     @Override
     public void onBackPressed() {
@@ -94,6 +105,8 @@ public class MainActivity extends AppCompatActivity
                 FragmentTransaction trns = mgr.beginTransaction();
                 trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
                 trns.commit();
+                getSupportActionBar().setTitle("Home");
+                MainActivity.this.currentFragment = "home";
             }
 
         }
@@ -127,25 +140,27 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setMessage("Are you sure that you want to synch?");
-        alertBuilder.setTitle("Synching");
+        alertBuilder.setMessage("Are you sure that you want to sync?");
+        alertBuilder.setTitle("Syncing");
         alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ArrayList<Trip> trips = dataBaseHandler.getallTrips();
                 final String tripJson = gson.toJson(trips);
 
-                String url = "http://192.168.1.4:5030/tripSchedularBackEnd/SynchServlet";
+                String url = "https://samybackend.herokuapp.com/SynchServlet";
                 StringRequest stringRequest = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         System.out.println("success " + response);
-                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        //  Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error.getMessage());
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -158,6 +173,9 @@ public class MainActivity extends AppCompatActivity
                     }
                 };
                 singleton.addToRequestQueue(stringRequest);
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setMessage("Fetching Data");
+                progressDialog.show();
             }
         });
 
@@ -170,10 +188,17 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         if (id == R.id.upcoming) {
             fragment = new UpcomingFragment();
+            getSupportActionBar().setTitle("Upcoming Trips");
+            currentFragment = "upcoming";
+            Log.i("MyTag",currentFragment);
         } else if (id == R.id.past) {
             fragment = new PastFragment();
+            getSupportActionBar().setTitle("Past Trips");
+            currentFragment = "past";
         } else if (id == R.id.history) {
             fragment = new HistoryFragment();
+            getSupportActionBar().setTitle("History");
+            currentFragment = "history";
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about) {
@@ -184,12 +209,70 @@ public class MainActivity extends AppCompatActivity
         if (fragment != null) {
             FragmentManager mgr = getFragmentManager();
             FragmentTransaction trns = mgr.beginTransaction();
-            trns.replace(R.id.content_main, fragment);
+            trns.replace(R.id.content_main, fragment, "current_fragment");
             trns.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    /*@Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Fragment currentFragment = getFragmentManager().findFragmentByTag("current_fragment");
+        if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof UpcomingFragment) {
+            outState.putString("current_fragment","upcoming");
+        }
+        else {
+            FragmentManager mgr = getFragmentManager();
+            FragmentTransaction trns = mgr.beginTransaction();
+            trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
+            trns.commit();
+            getSupportActionBar().setTitle("Home");
+        }
+    }*/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getIntent().putExtra("currentFragment", currentFragment);
+        Log.i("MyTag",currentFragment+" onstop");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent().hasExtra("currentFragment")) {
+            Log.i("MyTag","in if");
+            currentFragment = getIntent().getExtras().getString("currentFragment");
+            FragmentManager mgr = getFragmentManager();
+            FragmentTransaction trns = mgr.beginTransaction();
+            switch (currentFragment) {
+                case "upcoming":
+                    trns.replace(R.id.content_main, new UpcomingFragment());
+                    trns.commit();
+                    getSupportActionBar().setTitle("Upcoming Trips");
+                    break;
+                case "past":
+                    trns.replace(R.id.content_main, new PastFragment());
+                    trns.commit();
+                    getSupportActionBar().setTitle("Past Trips");
+                    break;
+                case "history":
+                    trns.replace(R.id.content_main, new HistoryFragment());
+                    trns.commit();
+                    getSupportActionBar().setTitle("History");
+                    break;
+                case "home":
+                    trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
+                    trns.commit();
+                    getSupportActionBar().setTitle("Home");
+                    break;
+
+            }
+        }
+        Log.i("MyTag",currentFragment+" onresume");
     }
 }
