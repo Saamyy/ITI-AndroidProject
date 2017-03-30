@@ -246,7 +246,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
                         progressDialog.dismiss();
-                        finish();
+                        finishAffinity();
 //                        System.out.println("Trips"+trips.get(0).getNotes().get(0).getContent());
                     }
 

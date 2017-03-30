@@ -80,8 +80,10 @@
         <activity android:name=".SignupActivity">
             </activity>
 
-        <activity android:name=".SplashScreen">
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

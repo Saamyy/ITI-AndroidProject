@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
         android:background="#C6002D"
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="97dp"
         android:id="@+id/textView"
-        android:textSize="80px"
+        android:textSize="24sp"
         android:textColor="@color/cast_expanded_controller_progress_text_color"
         android:textStyle="bold"
         android:layout_below="@+id/imageView"
