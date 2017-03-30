@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#C6002D"
     tools:context="com.example.romisaa.tripschedular.LoginActivity"
     android:orientation="vertical"
     android:gravity="center">
@@ -17,6 +18,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="110px"
         android:gravity="center">
 
         <ImageView
@@ -39,9 +41,9 @@
                 android:inputType="textEmailAddress"
                 android:background="@drawable/rounded_border_edittext"
                 android:ems="10"
-                android:textSize="100px"
+                android:textSize="50px"
                 android:id="@+id/emailEditText"
-                android:hint="Email"
+                android:hint=" Email"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -49,7 +51,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="50px"
+            android:paddingTop="30px"
             >
 
             <EditText
@@ -57,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:textSize="100px"
+                android:textSize="50px"
                 android:background="@drawable/rounded_border_edittext"
                 android:id="@+id/passwordEditText"
                 android:hint="Password"
@@ -66,7 +68,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="50px"
+            android:paddingTop="20px"
             >
         <Button
             android:text="Sign Up"

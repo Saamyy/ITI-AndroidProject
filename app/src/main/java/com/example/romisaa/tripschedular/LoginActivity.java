@@ -155,6 +155,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -196,6 +197,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("mafesh connectiom 3lya l ne3ma ");
         Toast.makeText(this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
     }
     //google
     @Override
