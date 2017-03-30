@@ -90,6 +90,6 @@
         android:id="@+id/linkToSignup"
         android:textAlignment="center"
         android:layout_marginTop="10dp"
-        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+        android:textColor="#ffffff" />
 
 </LinearLayout>

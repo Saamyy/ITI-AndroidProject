@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     String currentFragment = "home";
     ProgressDialog progressDialog;
+    private Boolean exit = false;
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.i("MyTag",currentFragment+" onstart");
+        exit=false;
     }
 
     @Override
@@ -98,8 +100,23 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             HomeFragment currentFragment = (HomeFragment) getFragmentManager().findFragmentByTag("home_fragment");
-            if (currentFragment != null && currentFragment.isVisible())
-                super.onBackPressed();
+            if (currentFragment != null && currentFragment.isVisible()) {
+               // super.onBackPressed();
+                if(exit)
+                {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(this, "Press the back button once again to close.", Toast.LENGTH_SHORT).show();
+                    exit=true;
+                }
+
+            }
+
             else {
                 FragmentManager mgr = getFragmentManager();
                 FragmentTransaction trns = mgr.beginTransaction();

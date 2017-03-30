@@ -23,7 +23,7 @@
         android:layout_marginTop="97dp"
         android:id="@+id/textView"
         android:textSize="24sp"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="#ffffff"
         android:textStyle="bold"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />

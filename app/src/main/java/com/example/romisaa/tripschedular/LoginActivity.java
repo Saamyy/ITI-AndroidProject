@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -197,7 +198,9 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("mafesh connectiom 3lya l ne3ma ");
         Toast.makeText(this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
-        progressDialog.dismiss();
+        if(progressDialog!=null) {
+            progressDialog.dismiss();
+        }
     }
     //google
     @Override
@@ -274,5 +277,25 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             // Signed out, show unauthenticated UI.
             //updateUI(false);
         }
+    }
+
+
+
+    private Boolean exit = false;
+    @Override
+    public void onBackPressed() {
+        if(exit)
+        {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(this, "Press the back button once again to close.", Toast.LENGTH_SHORT).show();
+            exit=true;
+        }
+
     }
 }

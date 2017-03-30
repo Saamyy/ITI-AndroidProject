@@ -9,6 +9,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -26,10 +29,13 @@ public class SplashScreen extends AppCompatActivity {
 
         Animation anim1 = AnimationUtils.loadAnimation(this,R.anim.anim_down);
         ImageView img =(ImageView)findViewById(R.id.imageView);
+        Animation anim2=AnimationUtils.loadAnimation(this,R.anim.textanim);
+        TextView text=(TextView) findViewById(R.id.textView);
 
 
 
         img.setAnimation(anim1);
+        text.setAnimation(anim2);
 
        /* mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
         ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
