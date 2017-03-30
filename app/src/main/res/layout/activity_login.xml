@@ -73,7 +73,7 @@
             android:id="@+id/loginBtn"
             android:layout_marginTop="30dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/cast_expanded_controller_text_color" />
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"

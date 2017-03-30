@@ -1,18 +1,162 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.romisaa.tripschedular.HomeFragment"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical">
+    tools:context="com.example.romisaa.tripschedular.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Temporary Home"
-        android:textSize="36sp"
-        android:gravity="center" />
+        android:weightSum="2">
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff4444"
+            android:weightSum="5"
+            android:clickable="true"
+            android:id="@+id/l1">
+
+            <TextView
+                android:text="Upcoming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:padding="16dp"
+                android:fontFamily="monospace"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/speedometer"
+                android:id="@+id/imageView9"
+                android:layout_weight="1"
+                android:padding="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F5DEB3"
+                android:weightSum="5"
+                android:clickable="true"
+            android:id="@+id/l2">
+
+            <TextView
+                android:text="Past"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:padding="16dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/past"
+                android:id="@+id/imageView10"
+                android:layout_weight="1"
+                android:padding="20dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F5DEB3"
+                android:weightSum="5"
+                android:clickable="true"
+                android:id="@+id/l3">
+
+                <TextView
+                    android:text="History"
+                    android:layout_width="175dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:fontFamily="monospace" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/placeholder"
+                    android:id="@+id/imageView11"
+                    android:layout_weight="1"
+                    android:padding="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:background="#ff4444"
+                    android:weightSum="5"
+                    android:clickable="true"
+                android:id="@+id/l4">
+
+                <TextView
+                    android:text="Sync"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:fontFamily="monospace" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/sync"
+                    android:id="@+id/imageView12"
+                    android:layout_weight="1"
+                    android:padding="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
 </LinearLayout>
