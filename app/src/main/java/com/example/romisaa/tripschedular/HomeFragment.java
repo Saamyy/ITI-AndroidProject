@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -60,11 +62,18 @@ Singleton singleton;
         l2= (LinearLayout) view.findViewById(R.id.l2);
         l3= (LinearLayout) view.findViewById(R.id.l3);
         l4= (LinearLayout) view.findViewById(R.id.l4);
+        Animation anim2= AnimationUtils.loadAnimation(getActivity(),R.anim.textanim);
+        l1.setAnimation(anim2);
+        l2.setAnimation(anim2);
+        l3.setAnimation(anim2);
+        l4.setAnimation(anim2);
+
         singleton = Singleton.getInstance(getActivity());
         l1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragment = new UpcomingFragment();
+                getActivity().setTitle("Upcoming");
                 trns.replace(R.id.content_main, fragment);
                 trns.commit();
             }
@@ -73,6 +82,7 @@ Singleton singleton;
             @Override
             public void onClick(View v) {
                 fragment = new PastFragment();
+                getActivity().setTitle("Past");
                 trns.replace(R.id.content_main, fragment);
                 trns.commit();
             }
@@ -81,6 +91,7 @@ Singleton singleton;
             @Override
             public void onClick(View v) {
                 fragment = new HistoryFragment();
+                getActivity().setTitle("History");
                 trns.replace(R.id.content_main, fragment);
                 trns.commit();
             }
