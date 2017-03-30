@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
                             editor.putString("password",passwordEditText.getText().toString());
                             editor.commit();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                          //  progressDialog.dismiss();
+                           progressDialog.dismiss();
                             startActivity(intent);
                         }
                         else{
@@ -92,11 +92,11 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
                 singleton.addToRequestQueue(stringRequest);
-/*
-                progressDialog = new ProgressDialog(SignupActivity.this.get);
+
+               progressDialog = new ProgressDialog(SignupActivity.this);
                 progressDialog.setMessage("LoaDing....");
-                progressDialog.show();
-*/
+               progressDialog.show();
+
 
 
 
