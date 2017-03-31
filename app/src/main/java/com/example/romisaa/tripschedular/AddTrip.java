@@ -51,6 +51,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.vision.text.Line;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -174,7 +175,7 @@ public class AddTrip extends AppCompatActivity {
                     editText.setSingleLine(false);  //TODO Check
                     editText.setTextColor(0xff000000);
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                    editText.setHint("Note ..");
+                    editText.setHint("Insert your note here");
                     editText.setHintTextColor(Color.DKGRAY);
                     notesEditTexts.add(editText);
                     //Creating Button
@@ -188,6 +189,10 @@ public class AddTrip extends AppCompatActivity {
 
         final PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
         final PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+
+//        ((LinearLayout)placeAutocompleteFragment.getView()).removeView(placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_button));
+//        placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_button).set
+        ((LinearLayout) placeAutocompleteFragment2.getView()).removeView(placeAutocompleteFragment2.getView().findViewById(R.id.place_autocomplete_search_button));
 
         placeAutocompleteFragment.setHint("Choose source");
         placeAutocompleteFragment2.setHint("Choose destination");
@@ -318,7 +323,7 @@ public class AddTrip extends AppCompatActivity {
             Toast.makeText(this, "Your trip must have a name", Toast.LENGTH_SHORT).show();
             return false;
         }
-
+/*
         if (strsource == null || strsource.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
             return false;
@@ -327,7 +332,7 @@ public class AddTrip extends AppCompatActivity {
         if (strdestination == null || strdestination.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
         if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             Toast.makeText(AddTrip.this, "Time specified already passed", Toast.LENGTH_SHORT).show();
             return false;

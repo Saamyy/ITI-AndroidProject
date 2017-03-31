@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity
                 trns.commit();
                 getSupportActionBar().setTitle("Home");
                 MainActivity.this.currentFragment = "home";
+                drawer.setSelected(false);
             }
 
         }
