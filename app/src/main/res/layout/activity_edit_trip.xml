@@ -46,7 +46,8 @@
         tools:context="com.example.romisaa.tripschedular.AddTrip">
 
 
-        <android.support.design.widget.TextInputLayout
+
+    <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -64,17 +65,22 @@
         </android.support.design.widget.TextInputLayout>
 
 
+
         <fragment
             android:id="@+id/source"
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+
+
+
         <fragment
             android:id="@+id/destination"
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
 
         <android.support.design.widget.TextInputLayout
@@ -95,6 +101,7 @@
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -103,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"></LinearLayout>
+
 
             <EditText
                 android:id="@+id/time"
@@ -116,7 +124,6 @@
                 android:imeOptions="actionUnspecified"
                 android:maxLines="1"
                 android:singleLine="true" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
