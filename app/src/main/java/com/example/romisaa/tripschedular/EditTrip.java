@@ -3,6 +3,8 @@ package com.example.romisaa.tripschedular;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -184,7 +187,9 @@ public class EditTrip extends AppCompatActivity {
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                             calendar.set(Calendar.HOUR, hourOfDay);
                             calendar.set(Calendar.MINUTE, minute);
-                            time.setText(hourOfDay + ":" + minute);
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+                            time.setText(timeFormat.format(calendar.getTime()));
+//                            time.setText(hourOfDay + ":" + minute);
                             Toast.makeText(EditTrip.this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }, hours, minutes, false);
@@ -221,15 +226,29 @@ public class EditTrip extends AppCompatActivity {
         addNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                for (EditText editText : notesEditTexts) {
+                    if (editText.getText().toString().trim().equals(""))
+                        return;
+                }
+
+                for (EditText editText : newTripNotes) {
+                    if (editText.getText().toString().trim().equals(""))
+                        return;
+                }
+
                 //Creating Edit Text
                 final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 EditText editText = new EditText(getApplicationContext());
                 editText.setLayoutParams(lparams);
                 editText.setSingleLine(false);  //TODO Check
+                editText.setMaxLines(1);
+                editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                 editText.setTextColor(0xff000000);
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
                 editText.setHintTextColor(0xff000000);
-                editText.setHint("New Note Here ");
+                editText.setHint("Insert your note here");
+                editText.setHintTextColor(Color.DKGRAY);
             //    notesEditTexts.add(editText);
                 newTripNotes.add(editText);
                 //Creating Button
@@ -320,10 +339,11 @@ public class EditTrip extends AppCompatActivity {
                         }
                     }
 
-
-//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent);
-                      finish();
+                    Toast.makeText(EditTrip.this, "Your changes have been saved successfully", Toast.LENGTH_SHORT).show();
+                    finishAffinity();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+//                      finish();
                 }
             }
         });
@@ -362,4 +382,9 @@ public class EditTrip extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        findViewById(R.id.mLayout).requestFocus();
+    }
 }
