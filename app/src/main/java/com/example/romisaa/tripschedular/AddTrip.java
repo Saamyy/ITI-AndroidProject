@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -173,6 +174,7 @@ public class AddTrip extends AppCompatActivity {
                     EditText editText = new EditText(getApplicationContext());
                     editText.setLayoutParams(lparams);
                     editText.setSingleLine(false);  //TODO Check
+                    editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     editText.setTextColor(0xff000000);
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     editText.setHint("Insert your note here");
@@ -322,7 +324,6 @@ public class AddTrip extends AppCompatActivity {
             Toast.makeText(this, "Your trip must have a name", Toast.LENGTH_SHORT).show();
             return false;
         }
-/*
         if (strsource == null || strsource.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a source", Toast.LENGTH_SHORT).show();
             return false;
@@ -331,7 +332,7 @@ public class AddTrip extends AppCompatActivity {
         if (strdestination == null || strdestination.trim().equals("")) {
             Toast.makeText(this, "Your trip must have a destination", Toast.LENGTH_SHORT).show();
             return false;
-        }*/
+        }
         if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             Toast.makeText(AddTrip.this, "Time specified already passed", Toast.LENGTH_SHORT).show();
             return false;
@@ -345,6 +346,12 @@ public class AddTrip extends AppCompatActivity {
         super.onBackPressed();
 //        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //        startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        findViewById(R.id.mLayout).requestFocus();
     }
 }
 

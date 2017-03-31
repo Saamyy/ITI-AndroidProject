@@ -70,7 +70,8 @@ public class ListArrayAdapter  extends ArrayAdapter{
         calendar.setTimeInMillis(dateInLong);
         SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy - ");
         String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
-        String time = (calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
+        String minutes = calendar.get(Calendar.MINUTE) < 10 ? "0" + String.valueOf(calendar.get(Calendar.MINUTE)) : String.valueOf(calendar.get(Calendar.MINUTE));
+        String time = (calendar.get(Calendar.HOUR) + ":" + minutes + " " + am_pm);
 
         Calendar today = Calendar.getInstance();
         if(calendar.get(Calendar.YEAR)==today.get(Calendar.YEAR) &&
@@ -93,7 +94,7 @@ public class ListArrayAdapter  extends ArrayAdapter{
             return("Tomorrow "+format.format(calendar.getTime())+time);
         }
 
-        return format.format(calendar.getTime());
+        return format.format(calendar.getTime()) + time;
     }
 
 }

@@ -1,56 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:andriod="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:context="com.example.romisaa.tripschedular.AddTrip">
+    android:fitsSystemWindows="true"
+    tools:context="com.example.romisaa.tripschedular.ViewTrip">
 
-    <!--
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:andriod="http://schemas.android.com/apk/res-auto"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-    -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <!--</ScrollView>-->
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:srcCompat="@drawable/diskette" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <LinearLayout
             android:id="@+id/done"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:weightSum="1"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
             app:layout_scrollFlags="scroll"
             tools:context="com.example.romisaa.tripschedular.AddTrip">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.20"
-                    android:padding="10dp"
-                    andriod:srcCompat="@drawable/backward" />
+                    android:id="@+id/imageView4"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/car" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8">
+                    android:layout_marginStart="10dp">
 
                     <EditText
                         android:id="@+id/name"
@@ -61,7 +64,8 @@
                         android:imeActionLabel="@string/action_sign_in_short"
                         android:imeOptions="actionUnspecified"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textStyle="bold" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -70,68 +74,60 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.20"
-                    android:padding="10dp"
-                    andriod:srcCompat="@drawable/backward" />
+                    android:id="@+id/imageView5"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/location" />
 
 
                 <fragment
-                android:id="@+id/source"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                    android:layout_width="0dp"
+                    android:id="@+id/source"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.20"
-                    android:padding="10dp"
-                    andriod:srcCompat="@drawable/backward" />
-
-
-                <fragment
-                android:id="@+id/destination"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.20"
-                    android:padding="10dp"
-                    andriod:srcCompat="@drawable/backward" />
+                    android:id="@+id/imageView6"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/location" />
 
+                <fragment
+                    android:id="@+id/destination"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/calendar" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8">
+                    android:layout_marginLeft="10dp">
 
                     <EditText
                         android:id="@+id/date"
@@ -141,33 +137,28 @@
                         android:hint="Date"
                         android:imeActionId="@+id/login"
                         android:imeActionLabel="@string/action_sign_in_short"
-
                         android:imeOptions="actionUnspecified"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textStyle="bold" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.20"
-                    android:padding="10dp"
-                    andriod:srcCompat="@drawable/backward" />
-
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/clock" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8">
+                    android:layout_marginStart="10dp">
 
                     <EditText
                         android:id="@+id/time"
@@ -180,89 +171,378 @@
 
                         android:imeOptions="actionUnspecified"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.20"
-                    andriod:srcCompat="@drawable/backward" />
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="63dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:orientation="horizontal">
+                    android:text="Notes"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="63dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Notes"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/addNoteBtn"
+                    android:layout_height="wrap_content"
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/addNoteBtn"
-                        android:layout_width="25dp"
-                        android:layout_height="28dp"
-                        android:layout_marginTop="5dp"
-                        android:clickable="true"
-                        andriod:fabSize="mini"
-                        andriod:srcCompat="@drawable/plus" />
+                    android:clickable="true"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/plus"
+                    android:layout_width="30dp"
+                    app:elevation="0dp" />
 
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/mLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
             </LinearLayout>
 
+            <!--
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/lable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:textSize="30px"
+                            android:textColor="@android:color/holo_red_light"
+                            android:text="Status"
+                            android:imeActionId="@+id/login"
+                            android:imeActionLabel="@string/action_sign_in_short"
+                            android:imeOptions="actionUnspecified"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:layout_marginTop="10dp" />
+
+
+                        <TextView
+                            android:id="@+id/statusEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:textSize="50px"
+                            android:hint="Status"
+                            android:textStyle="bold"
+                            android:imeActionId="@+id/login"
+                            android:imeActionLabel="@string/action_sign_in_short"
+                            android:imeOptions="actionUnspecified"
+                            android:maxLines="1"
+                            android:singleLine="true" />
+
+                    </android.support.design.widget.TextInputLayout>
+            -->
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:layout_height="wrap_content">
+
 
                 <CheckBox
                     android:id="@+id/kind"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:text="Assign Back Trip"
+                    android:text="Assign a return trip"
+                    android:textStyle="bold"
                     android:visibility="visible" />
-
             </android.support.design.widget.TextInputLayout>
 
 
         </LinearLayout>
     </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:srcCompat="@drawable/diskette" />
-
 </android.support.design.widget.CoordinatorLayout>
+
+
+    <!--
+        <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:andriod="http://schemas.android.com/apk/res-auto"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false"
+            tools:context="com.example.romisaa.tripschedular.AddTrip">
+
+            &lt;!&ndash;
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:andriod="http://schemas.android.com/apk/res-auto"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+            &ndash;&gt;
+
+            &lt;!&ndash;</ScrollView>&ndash;&gt;
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/done"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:weightSum="1"
+                    app:layout_scrollFlags="scroll"
+                    tools:context="com.example.romisaa.tripschedular.AddTrip">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.20"
+                            android:padding="10dp"
+                            andriod:srcCompat="@drawable/backward" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8">
+
+                            <EditText
+                                android:id="@+id/name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Trip Name"
+                                android:imeActionId="@+id/login"
+                                android:imeActionLabel="@string/action_sign_in_short"
+                                android:imeOptions="actionUnspecified"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.20"
+                            android:padding="10dp"
+                            andriod:srcCompat="@drawable/backward" />
+
+
+                        <fragment
+                        android:id="@+id/source"
+                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.20"
+                            android:padding="10dp"
+                            andriod:srcCompat="@drawable/backward" />
+
+
+                        <fragment
+                        android:id="@+id/destination"
+                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.20"
+                            android:padding="10dp"
+                            andriod:srcCompat="@drawable/backward" />
+
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8">
+
+                            <EditText
+                                android:id="@+id/date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="Date"
+                                android:imeActionId="@+id/login"
+                                android:imeActionLabel="@string/action_sign_in_short"
+
+                                android:imeOptions="actionUnspecified"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.20"
+                            android:padding="10dp"
+                            andriod:srcCompat="@drawable/backward" />
+
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8">
+
+                            <EditText
+                                android:id="@+id/time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="true"
+                                android:hint="Time"
+                                android:imeActionId="@+id/login"
+                                android:imeActionLabel="@string/action_sign_in_short"
+
+                                android:imeOptions="actionUnspecified"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.20"
+                            andriod:srcCompat="@drawable/backward" />
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="63dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="5dp"
+                                android:text="Notes"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp" />
+
+                            <android.support.design.widget.FloatingActionButton
+                                android:id="@+id/addNoteBtn"
+                                android:layout_width="25dp"
+                                android:layout_height="28dp"
+                                android:layout_marginTop="5dp"
+                                android:clickable="true"
+                                andriod:fabSize="mini"
+                                andriod:srcCompat="@drawable/plus" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/mLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                    </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <CheckBox
+                            android:id="@+id/kind"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Assign Back Trip"
+                            android:visibility="visible" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                app:backgroundTint="@android:color/holo_red_light"
+                app:srcCompat="@drawable/diskette" />
+
+        </android.support.design.widget.CoordinatorLayout>-->
