@@ -150,7 +150,7 @@ public class AddTrip extends AppCompatActivity {
                             calendar.set(Calendar.MINUTE, minute);
                             SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
                             time.setText(timeFormat.format(calendar.getTime()));
-                            Toast.makeText(AddTrip.this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(AddTrip.this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }, hours, minutes, false);
 

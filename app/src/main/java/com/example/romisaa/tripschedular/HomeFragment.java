@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,9 @@ public class HomeFragment extends Fragment {
     LinearLayout l4;
     Fragment fragment;
 
-    FragmentManager mgr ;
-    FragmentTransaction trns ;
-Singleton singleton;
+    FragmentManager mgr;
+    FragmentTransaction trns;
+    Singleton singleton;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,14 +56,14 @@ Singleton singleton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_home, container, false);
-        mgr=getFragmentManager();
-        trns=mgr.beginTransaction();
-        l1= (LinearLayout) view.findViewById(R.id.l1);
-        l2= (LinearLayout) view.findViewById(R.id.l2);
-        l3= (LinearLayout) view.findViewById(R.id.l3);
-        l4= (LinearLayout) view.findViewById(R.id.l4);
-        Animation anim2= AnimationUtils.loadAnimation(getActivity(),R.anim.textanim);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        mgr = getFragmentManager();
+        trns = mgr.beginTransaction();
+        l1 = (LinearLayout) view.findViewById(R.id.l1);
+        l2 = (LinearLayout) view.findViewById(R.id.l2);
+        l3 = (LinearLayout) view.findViewById(R.id.l3);
+        l4 = (LinearLayout) view.findViewById(R.id.l4);
+        Animation anim2 = AnimationUtils.loadAnimation(getActivity(), R.anim.textanim);
         l1.setAnimation(anim2);
         l2.setAnimation(anim2);
         l3.setAnimation(anim2);
@@ -73,7 +74,8 @@ Singleton singleton;
             @Override
             public void onClick(View v) {
                 fragment = new UpcomingFragment();
-                getActivity().setTitle("Upcoming");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Upcoming");
+                ((MainActivity) getActivity()).currentFragment = "upcoming";
                 trns.replace(R.id.content_main, fragment);
                 trns.commit();
             }
@@ -82,7 +84,8 @@ Singleton singleton;
             @Override
             public void onClick(View v) {
                 fragment = new PastFragment();
-                getActivity().setTitle("Past");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Past");
+                ((MainActivity) getActivity()).currentFragment = "past";
                 trns.replace(R.id.content_main, fragment);
                 trns.commit();
             }
@@ -91,7 +94,8 @@ Singleton singleton;
             @Override
             public void onClick(View v) {
                 fragment = new HistoryFragment();
-                getActivity().setTitle("History");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("History");
+                ((MainActivity) getActivity()).currentFragment = "history";
                 trns.replace(R.id.content_main, fragment);
                 trns.commit();
             }
@@ -100,18 +104,19 @@ Singleton singleton;
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertBuilder;
-               final  DataBaseHandler dataBaseHandler=new DataBaseHandler(getActivity());
-                final Gson gson=new Gson();;
+                final DataBaseHandler dataBaseHandler = new DataBaseHandler(getActivity());
+                final Gson gson = new Gson();
+                ;
                 alertBuilder = new AlertDialog.Builder(getActivity());
-                alertBuilder.setMessage("Are you sure that you want to synch?");
-                alertBuilder.setTitle("Synching");
+                alertBuilder.setMessage("Are you sure that you want to sync?");
+                alertBuilder.setTitle("Syncing");
                 alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ArrayList<Trip> trips = dataBaseHandler.getallTrips();
                         final String tripJson = gson.toJson(trips);
 
-                        String url = "http://192.168.1.4:5030/tripSchedularBackEnd/SynchServlet";
+                        String url = "http://samybackend.herokuapp.com/SynchServlet";
                         StringRequest stringRequest = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     RequestQueue requestQueue;
     Gson gson;
     SharedPreferences sharedPreferences;
-    String currentFragment = "home";
+    public String currentFragment;
     ProgressDialog progressDialog;
     private Boolean exit = false;
 
@@ -118,13 +118,16 @@ public class MainActivity extends AppCompatActivity
             }
 
             else {
+                //Go Home
                 FragmentManager mgr = getFragmentManager();
                 FragmentTransaction trns = mgr.beginTransaction();
                 trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
                 trns.commit();
                 getSupportActionBar().setTitle("Home");
                 MainActivity.this.currentFragment = "home";
-                drawer.setSelected(false);
+                MenuItem item = (MenuItem) findViewById(R.id.home);
+//                item.setChecked(true);
+                exit = false;
             }
 
         }
@@ -217,11 +220,16 @@ public class MainActivity extends AppCompatActivity
             fragment = new HistoryFragment();
             getSupportActionBar().setTitle("History");
             currentFragment = "history";
-        } else if (id == R.id.help) {
+//        } else if (id == R.id.help) {
 
         } else if (id == R.id.about) {
             AlertDialog alertDialog = alertBuilder.create();
             alertDialog.show();
+        } else if (id == R.id.home) {
+            fragment = new HomeFragment();
+            getSupportActionBar().setTitle("Home");
+            currentFragment = "home";
+            exit = false;
         }
 
         if (fragment != null) {
@@ -287,6 +295,7 @@ public class MainActivity extends AppCompatActivity
                     trns.replace(R.id.content_main, new HomeFragment(), "home_fragment");
                     trns.commit();
                     getSupportActionBar().setTitle("Home");
+                    exit = false;
                     break;
 
             }
