@@ -89,6 +89,13 @@ public class EditTrip extends AppCompatActivity {
         status.setText(newTrip.getStatus());
         final PlaceAutocompleteFragment placeAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.source);
         final PlaceAutocompleteFragment placeAutocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.destination);
+
+        ((LinearLayout) placeAutocompleteFragment.getView()).removeView(placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_button));
+        ((LinearLayout) placeAutocompleteFragment2.getView()).removeView(placeAutocompleteFragment2.getView().findViewById(R.id.place_autocomplete_search_button));
+
+        EditText sourceTextInput = ((EditText) placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input));
+//        sourceTextInput.setTextSize(50);      TODO: That's how to style fragment inputs
+
         placeAutocompleteFragment.setHint("Source");
         placeAutocompleteFragment2.setHint("destenation");
         placeAutocompleteFragment.setText(tripNameFromLngLat(newTrip.getSource()));
