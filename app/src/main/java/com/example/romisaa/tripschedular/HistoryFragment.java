@@ -109,39 +109,41 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                 System.out.println(response);
                 System.out.println(rootParser.parse(response));
                 List<List<HashMap<String, String>>> roots = rootParser.parse(response);
-                // Traversing through all the routes
-                for (int i = 0; i < roots.size(); i++) {
-                    // Fetching i-th route
-                    List<HashMap<String, String>> path = roots.get(i);
+                if (roots!=null) {
+                    // Traversing through all the routes
+                    for (int i = 0; i < roots.size(); i++) {
+                        // Fetching i-th route
+                        List<HashMap<String, String>> path = roots.get(i);
 
-                    // Fetching all the points in i-th route
-                    for (int j = 0; j < path.size(); j++) {
-                        HashMap<String, String> point = path.get(j);
+                        // Fetching all the points in i-th route
+                        for (int j = 0; j < path.size(); j++) {
+                            HashMap<String, String> point = path.get(j);
 
-                        double lat = Double.parseDouble(point.get("lat"));
-                        double lng = Double.parseDouble(point.get("lng"));
-                        LatLng position = new LatLng(lat, lng);
-                        if (j == 0) {
-                            latitudeSource = lat;
-                            longitudeSource = lng;
+                            double lat = Double.parseDouble(point.get("lat"));
+                            double lng = Double.parseDouble(point.get("lng"));
+                            LatLng position = new LatLng(lat, lng);
+                            if (j == 0) {
+                                latitudeSource = lat;
+                                longitudeSource = lng;
+                            }
+                            if (j == path.size() - 1) {
+                                latitudeDest = lat;
+                                longitudeDest = lng;
+                            }
+                            System.out.println("Lat and lang    >" + lat + "    " + lng);
+                            points.add(position);
                         }
-                        if (j == path.size() - 1) {
-                            latitudeDest = lat;
-                            longitudeDest = lng;
-                        }
-                        System.out.println("Lat and lang    >" + lat + "    " + lng);
-                        points.add(position);
-                    }
-                    System.out.println("gwa el function     >" + points.get(2).longitude);
-                    // Adding all the points in the route to LineOptions
+                        System.out.println("gwa el function     >" + points.get(2).longitude);
+                        // Adding all the points in the route to LineOptions
 //                    lineOptions.addAll(points);
 //                    lineOptions.width(8);
 //                    lineOptions.color(new Random().nextInt()+100);
-                    System.out.println("ana hena done gedan we kolo zy el fol");
+                        System.out.println("ana hena done gedan we kolo zy el fol");
+                    }
+                    mMap.addPolyline(new PolylineOptions().addAll(points).width(12).color(new Random().nextInt() + 100));
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeSource, longitudeSource)));
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeDest, longitudeDest)));
                 }
-                mMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(new Random().nextInt()+100));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeSource, longitudeSource)));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeDest, longitudeDest)));
                 Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -158,7 +160,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap=googleMap;
         System.out.println("ana ready fel map");
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(26.8206, 30.8025), 5));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(26.8206, 30.8025), 7));
     }
 
     public String lnglatFromName(String tripName){
@@ -166,6 +168,6 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public String tripNameFromLngLat(String fullName){
-        return fullName.substring(fullName.indexOf("#"),fullName.length()+1);
+        return fullName.substring(fullName.indexOf("#")+1,fullName.length());
     }
 }

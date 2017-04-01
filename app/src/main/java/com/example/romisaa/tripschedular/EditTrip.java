@@ -309,7 +309,8 @@ public class EditTrip extends AppCompatActivity {
                     Trip updatedTrip=new Trip();
                     updatedTrip.setId(newTrip.getId());
                     updatedTrip.setName(String.valueOf(name.getText()));
-                    updatedTrip.setDuration((long) 0);
+                    updatedTrip.setDuration("0");
+                    updatedTrip.setAveSpeeed("0");
                     updatedTrip.setStatus(String.valueOf(status.getText()));
                     updatedTrip.setSource(strsource);
                     updatedTrip.setDestination(strdestination);

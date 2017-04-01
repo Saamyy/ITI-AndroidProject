@@ -18,10 +18,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -193,11 +200,6 @@ public class UpcomingFragment extends Fragment {
                 return false;
             }
         });
-
-
-
-
-
         return view;
     }
 
@@ -208,6 +210,7 @@ public class UpcomingFragment extends Fragment {
         Uri uri=Uri.parse("google.navigation:q="+lnglatFromName(trip.getDestination())+"&mode=d");
         Intent intent=new Intent(Intent.ACTION_VIEW,uri);
         intent.setPackage("com.google.android.apps.maps");
+        setDurationAndSpeed(trip);
         startActivity(intent);
         TaskManager.getInstance(getActivity()).deleteTask(trip.getId());
     }
@@ -216,6 +219,56 @@ public class UpcomingFragment extends Fragment {
 
     public String lnglatFromName(String tripName){
         return tripName.substring(0,tripName.indexOf("#"));
+    }
+
+    public void setDurationAndSpeed(final Trip trip){
+
+        Singleton singleton=Singleton.getInstance(getActivity().getApplicationContext());
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lnglatFromName(trip.getSource()) + "&destination=" + lnglatFromName(trip.getDestination()) + "&key=AIzaSyBP0TBRYhcEWiIJhMM4GyoWWjWovszvGWk";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("success");
+                System.out.println(response);
+                JSONArray jRoutes;
+                JSONArray jLegs;
+                String timInHours="0";
+                String timInMin="0";
+                try {
+                    jRoutes = response.getJSONArray("routes");
+                    jLegs = ( (JSONObject)jRoutes.get(0)).getJSONArray("legs");
+                    JSONObject jsonObject=jLegs.getJSONObject(0);
+                    JSONObject distance=jsonObject.getJSONObject("distance");
+                    JSONObject duration=jsonObject.getJSONObject("duration");
+                    System.out.println(distance.getString("text")+"<<<<>>>>"+duration.getString("text"));
+                    String dist=distance.getString("text").substring(0,distance.getString("text").indexOf("k"));
+                    if (duration.getString("text").contains("hours")){
+                        timInMin=duration.getString("text").substring(duration.getString("text").indexOf("s")+1,duration.getString("text").indexOf("m"));
+                        timInHours=duration.getString("text").substring(0,duration.getString("text").indexOf("h"));
+
+                    }
+                    else{
+                        timInMin=duration.getString("text").substring(0,duration.getString("text").indexOf("m"));
+                        timInHours="0";
+                    }
+                    System.out.println(dist+"<><><><>"+timInHours+"<><><><>"+timInMin);
+                    float speed= Float.parseFloat(dist) / (Float.parseFloat(timInHours) + Float.parseFloat(timInMin)/60) ;
+                    String avespeed=String.valueOf(speed);
+                    System.out.println(avespeed);
+                    System.out.println(new DataBaseHandler(getActivity().getApplicationContext()).changeDurationAndSpeed(trip.getId(),duration.getString("text"),avespeed));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("error   >" + error.getMessage());
+                Toast.makeText(getActivity().getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+            }
+        });
+        singleton.addToRequestQueue(jsonObjectRequest);
     }
 
 

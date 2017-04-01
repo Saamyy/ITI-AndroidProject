@@ -20,8 +20,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.gcm.Task;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +45,8 @@ public class ViewTrip extends AppCompatActivity {
     TextView date;
     TextView time;
     TextView status;
+    TextView duration;
+    TextView speed;
     TextView notes;
     Trip trip;
     TextView notesHeader;
@@ -50,7 +60,7 @@ public class ViewTrip extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent=getIntent();
-         trip=(Trip) intent.getParcelableExtra("trip");
+        trip=(Trip) intent.getParcelableExtra("trip");
 
         name=(TextView)  findViewById(R.id.nameValue);
         name.setText(trip.getName());
@@ -77,6 +87,12 @@ public class ViewTrip extends AppCompatActivity {
         status=(TextView)findViewById(R.id.statusValue);
         status.setText(trip.getStatus());
 
+        duration= (TextView) findViewById(R.id.durationValue);
+        duration.setText(trip.getDuration());
+
+        speed= (TextView) findViewById(R.id.speedValue);
+        speed.setText(trip.getAveSpeeed()+" km/h");
+
         notesHeader=(TextView)findViewById(R.id.notes);
         notesdata= (LinearLayout) findViewById(R.id.notesData);
         if (trip.getNotes().size()==0)
@@ -99,10 +115,10 @@ public class ViewTrip extends AppCompatActivity {
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView.setText(trip.getNotes().get(i).getContent());
 
-            //Create Horizontal View
+                //Create Horizontal View
                 LinearLayout linearLayout = new LinearLayout(getApplicationContext());
                 notesdata.addView(textView);
-             }
+            }
 
         }
 
@@ -146,6 +162,7 @@ public class ViewTrip extends AppCompatActivity {
             Intent intent=new Intent(Intent.ACTION_VIEW,uri);
             intent.setPackage("com.google.android.apps.maps");
             dataBaseHandler.changeStatus(trip.getId(),"done");
+            setDurationAndSpeed(trip);
             TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
             finishAffinity();
             Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -159,7 +176,7 @@ public class ViewTrip extends AppCompatActivity {
             dataBaseHandler.changeStatus(trip.getId(),"done");
             TaskManager.getInstance(getApplicationContext()).deleteTask(trip.getId());
             finish();
-           // finish();
+            // finish();
         }
         if (id == R.id.assign_back_trip) {
 
@@ -200,6 +217,62 @@ public class ViewTrip extends AppCompatActivity {
 
     public String tripNameFromLngLat(String fullName){
         return fullName.substring(fullName.indexOf("#")+1,fullName.length());
+    }
+
+    public void setDurationAndSpeed(final Trip trip){
+
+        Singleton singleton=Singleton.getInstance(getApplicationContext());
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lnglatFromName(trip.getSource()) + "&destination=" + lnglatFromName(trip.getDestination()) + "&key=AIzaSyBP0TBRYhcEWiIJhMM4GyoWWjWovszvGWk";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("success");
+                System.out.println(response);
+                JSONArray jRoutes;
+                JSONArray jLegs;
+                String timInHours="0";
+                String timInMin="0";
+                try {
+                    jRoutes = response.getJSONArray("routes");
+                    jLegs = ( (JSONObject)jRoutes.get(0)).getJSONArray("legs");
+                    JSONObject jsonObject=jLegs.getJSONObject(0);
+                    JSONObject distance=jsonObject.getJSONObject("distance");
+                    JSONObject duration=jsonObject.getJSONObject("duration");
+                    System.out.println(distance.getString("text")+"<<<<>>>>"+duration.getString("text"));
+                    String dist=distance.getString("text").substring(0,distance.getString("text").indexOf("k"));
+                    if (duration.getString("text").contains("hours")){
+                        timInMin=duration.getString("text").substring(duration.getString("text").indexOf("s")+1,duration.getString("text").indexOf("m"));
+                        timInHours=duration.getString("text").substring(0,duration.getString("text").indexOf("h"));
+
+                    }
+                    else{
+                        timInMin=duration.getString("text").substring(0,duration.getString("text").indexOf("m"));
+                        timInHours="0";
+                    }
+                    System.out.println(dist+"<><><><>"+timInHours+"<><><><>"+timInMin);
+                    float speed= Float.parseFloat(dist) / (Float.parseFloat(timInHours) + Float.parseFloat(timInMin)/60) ;
+                    String avespeed=String.valueOf(speed);
+                    System.out.println(avespeed);
+                    System.out.println(new DataBaseHandler(getApplicationContext()).changeDurationAndSpeed(trip.getId(),duration.getString("text"),avespeed));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("error   >" + error.getMessage());
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+            }
+        });
+        singleton.addToRequestQueue(jsonObjectRequest);
+    }
+
+
+
+    public String lnglatFromName(String tripName){
+        return tripName.substring(0,tripName.indexOf("#"));
     }
 
 }

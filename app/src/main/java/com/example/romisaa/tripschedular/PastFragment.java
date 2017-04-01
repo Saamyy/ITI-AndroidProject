@@ -146,7 +146,8 @@ public class PastFragment extends Fragment {
                         Trip trip=new Trip();
                         trip.setName(out.getName()+" - Return");
                         trip.setSource(out.getDestination());
-                        trip.setDuration((long) 0);
+                        trip.setDuration("0");
+                        trip.setAveSpeeed("0");
                         trip.setDestination(out.getSource());
                         trip.setStatus("done");
                         trip.setDate(Calendar.getInstance().getTimeInMillis());

@@ -27,7 +27,7 @@ public class Trip implements Parcelable{
     String source;
     String destination;
     Long date;
-    Long duration;
+    String duration;
     ArrayList <Notes> notes = new ArrayList<>();
 
     public Trip() {
@@ -43,8 +43,8 @@ public class Trip implements Parcelable{
         source = in.readString();
         destination = in.readString();
         date = in.readLong();
-        duration = in.readLong();
-     //   in.readTypedList(notes,Notes.CREATOR);
+        duration = in.readString();
+        //   in.readTypedList(notes,Notes.CREATOR);
         in.readTypedList(notes,Notes.CREATOR);
 
     }
@@ -77,11 +77,11 @@ public class Trip implements Parcelable{
         this.date = date;
     }
 
-    public Long getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -93,7 +93,7 @@ public class Trip implements Parcelable{
         this.notes = notes;
     }
 
-    public Trip(int id, String name, String status, String aveSpeeed, String source, String destination, Long date, Long duration, ArrayList<Notes> notes) {
+    public Trip(int id, String name, String status, String aveSpeeed, String source, String destination, Long date, String duration, ArrayList<Notes> notes) {
 
         this.id = id;
         this.name = name;
@@ -168,7 +168,7 @@ public class Trip implements Parcelable{
         dest.writeString(source);
         dest.writeString(destination);
         dest.writeLong(date);
-        dest.writeLong(duration);
+        dest.writeString(duration);
         dest.writeTypedList(notes);
 
     }

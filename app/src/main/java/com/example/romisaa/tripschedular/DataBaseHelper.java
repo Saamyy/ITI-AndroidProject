@@ -43,7 +43,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_TRIPS_TABLE = "CREATE TABLE " + TABLE_TRIPS + "("
                 + TRIP_ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT,"
-                + DURATION + " LONG," +DATE+" LONG,"+STATUS+" TEXT,"+AVE_SPEED+" TEXT,"+
+                + DURATION + " TEXT," +DATE+" LONG,"+STATUS+" TEXT,"+AVE_SPEED+" TEXT,"+
                 SOURCE+" TEXT,"+DESTINATION+" TEXT"+")";
         sqLiteDatabase.execSQL(CREATE_TRIPS_TABLE);
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTES + "("

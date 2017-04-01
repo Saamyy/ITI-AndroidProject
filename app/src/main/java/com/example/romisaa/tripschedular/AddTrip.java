@@ -263,7 +263,8 @@ public class AddTrip extends AppCompatActivity {
                 newTrip.setSource(strsource);
                 newTrip.setDestination(strdestination);
                 //for testing onlyy
-                newTrip.setDuration((long) 0);
+                newTrip.setDuration("0");
+                newTrip.setAveSpeeed("0");
 
 //                in.setContent(String.valueOf(note.getText()));
                 for (EditText editText : notesEditTexts) {
@@ -289,7 +290,8 @@ public class AddTrip extends AppCompatActivity {
                     roundTrip.setName(String.valueOf(name.getText()) + " - Return");
                     roundTrip.setSource(strdestination);
                     roundTrip.setDestination(strsource);
-                    roundTrip.setDuration((long) 0);
+                    roundTrip.setDuration("0");
+                    roundTrip.setAveSpeeed("0");
                     Notes ins = new Notes();
                     ins.setContent("Return trip of " + name.getText());
                     rtripNotes.add(ins);
