@@ -115,7 +115,12 @@ public class AddTrip extends AppCompatActivity {
         tripKind = (CheckBox) findViewById(R.id.kind);
 
         date.setText(sdformat.format(calendar.getTime()));
-        time.setText(timeFormat.format(calendar.getTime()));
+//        time.setText(timeFormat.format(calendar.getTime()));
+        String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
+//        time.setText(calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
+        String minute = calendar.get(Calendar.MINUTE)<10?"0"+calendar.get(Calendar.MINUTE):""+calendar.get(Calendar.MINUTE);
+        int hour = calendar.get(Calendar.HOUR)==0?12:calendar.get(Calendar.HOUR);
+        time.setText(hour+":"+minute+ " "+am_pm);
 
         date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

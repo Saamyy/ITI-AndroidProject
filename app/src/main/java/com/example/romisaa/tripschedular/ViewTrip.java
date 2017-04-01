@@ -72,7 +72,9 @@ public class ViewTrip extends AppCompatActivity {
         calendar.setTimeInMillis(trip.getDate());
         calendar.get(Calendar.HOUR_OF_DAY);
         String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
-        time.setText(calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
+        String minute = calendar.get(Calendar.MINUTE)<10?"0"+calendar.get(Calendar.MINUTE):""+calendar.get(Calendar.MINUTE);
+        int hour = calendar.get(Calendar.HOUR)==0?12:calendar.get(Calendar.HOUR);
+        time.setText(hour+":"+minute+ " "+am_pm);
 
         status=(TextView)findViewById(R.id.statusValue);
         status.setText(trip.getStatus());

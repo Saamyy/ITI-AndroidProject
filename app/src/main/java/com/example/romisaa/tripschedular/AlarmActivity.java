@@ -114,7 +114,7 @@ public class AlarmActivity extends AppCompatActivity {
 
 
                     Notification.Builder builder = new Notification.Builder(AlarmActivity.this)
-                            .setSmallIcon(R.color.colorPrimaryDark)
+                            .setSmallIcon(R.drawable.launcher)
                             .setContentTitle("Trip Postponed")
                             .setContentText("You have a postponed trip to "+destinationString)
                             .setAutoCancel(true)

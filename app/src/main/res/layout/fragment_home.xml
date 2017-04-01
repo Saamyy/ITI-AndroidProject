@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#F97D81"
+            android:background="#FF7AA2"
             android:weightSum="5"
             android:clickable="true"
             android:id="@+id/l1">
@@ -41,7 +41,9 @@
                 android:textSize="20sp"
                 android:padding="16dp"
                 android:fontFamily="monospace"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textStyle="normal|bold"
+                android:textColor="#323232" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -57,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#9881F5"
+                android:background="#64ADEB"
                 android:weightSum="5"
                 android:clickable="true"
             android:id="@+id/l2">
@@ -71,7 +73,9 @@
                 android:textSize="20sp"
                 android:padding="16dp"
                 android:textAlignment="center"
-                android:fontFamily="monospace" />
+                android:fontFamily="monospace"
+                android:textColor="#323232"
+                android:textStyle="normal|bold" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -99,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#F9D08B"
+                android:background="#9ED9AE"
                 android:weightSum="5"
                 android:clickable="true"
                 android:id="@+id/l3">
@@ -112,7 +116,10 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:textAlignment="center"
-                    android:fontFamily="monospace" />
+                    android:fontFamily="monospace"
+                    android:textColor="#323232"
+                    android:textStyle="normal|bold"
+                    android:paddingTop="20dp" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -129,7 +136,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
-                    android:background="#69f49e"
+                    android:background="#FCF895"
                     android:weightSum="5"
                     android:clickable="true"
                 android:id="@+id/l4">
@@ -142,7 +149,10 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:textAlignment="center"
-                    android:fontFamily="monospace" />
+                    android:fontFamily="monospace"
+                    android:textColor="#323232"
+                    android:textStyle="normal|bold"
+                    android:paddingTop="20dp" />
 
                 <ImageView
                     android:layout_width="match_parent"

@@ -73,7 +73,7 @@ public class EditTrip extends AppCompatActivity {
 
         //Filling Data
         calendar = Calendar.getInstance();
-        String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
+
         String myFormat = "MMM dd, yyyy";
         SimpleDateFormat sdformat = new SimpleDateFormat(myFormat);
 
@@ -154,7 +154,11 @@ public class EditTrip extends AppCompatActivity {
         calendar=Calendar.getInstance();
         calendar.setTimeInMillis(newTrip.getDate());
         calendar.get(Calendar.HOUR_OF_DAY);
-        time.setText(calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
+        String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
+//        time.setText(calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+ " "+am_pm);
+        String minute = calendar.get(Calendar.MINUTE)<10?"0"+calendar.get(Calendar.MINUTE):""+calendar.get(Calendar.MINUTE);
+        int hour = calendar.get(Calendar.HOUR)==0?12:calendar.get(Calendar.HOUR);
+        time.setText(hour+":"+minute+ " "+am_pm);
 
 
         date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -185,12 +189,12 @@ public class EditTrip extends AppCompatActivity {
                     TimePickerDialog dialog = new TimePickerDialog(EditTrip.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            calendar.set(Calendar.HOUR, hourOfDay);
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             calendar.set(Calendar.MINUTE, minute);
                             SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
                             time.setText(timeFormat.format(calendar.getTime()));
 //                            time.setText(hourOfDay + ":" + minute);
-                            Toast.makeText(EditTrip.this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(EditTrip.this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }, hours, minutes, false);
 

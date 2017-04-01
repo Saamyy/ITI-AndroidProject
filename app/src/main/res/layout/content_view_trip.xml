@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.romisaa.tripschedular.ViewTrip"
-    tools:showIn="@layout/activity_view_trip">
+    tools:showIn="@layout/activity_view_trip"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
 
     <LinearLayout
         android:id="@+id/activity_trip_detail"
@@ -58,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0f3b44"
                 android:paddingEnd="10dp" />
 
         </LinearLayout>
@@ -94,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0f3b44"
                 android:paddingEnd="10dp" />
 
         </LinearLayout>
@@ -129,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0f3b44"
                 android:paddingEnd="10dp" />
 
         </LinearLayout>
@@ -164,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0f3b44"
                 android:paddingEnd="10dp" />
 
         </LinearLayout>
@@ -200,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0f3b44"
                 android:paddingEnd="10dp" />
 
         </LinearLayout>

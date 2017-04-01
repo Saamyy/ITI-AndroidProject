@@ -154,7 +154,7 @@ public class UpcomingFragment extends Fragment {
                         upCommingTrips.remove(listpostion);
                         adapter.notifyDataSetChanged();
                         startNavigation(out);
-                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
+//                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
                          //Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
                         break;
                     case 1:

@@ -71,7 +71,8 @@ public class ListArrayAdapter  extends ArrayAdapter{
         SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy - ");
         String am_pm = ((calendar.get(Calendar.AM_PM)) == Calendar.AM) ? "am" : "pm";
         String minutes = calendar.get(Calendar.MINUTE) < 10 ? "0" + String.valueOf(calendar.get(Calendar.MINUTE)) : String.valueOf(calendar.get(Calendar.MINUTE));
-        String time = (calendar.get(Calendar.HOUR) + ":" + minutes + " " + am_pm);
+        int hour = calendar.get(Calendar.HOUR)==0?12:calendar.get(Calendar.HOUR);
+        String time = hour + ":" + minutes + " " + am_pm ;
 
         Calendar today = Calendar.getInstance();
         if(calendar.get(Calendar.YEAR)==today.get(Calendar.YEAR) &&
