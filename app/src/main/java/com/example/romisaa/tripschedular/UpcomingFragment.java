@@ -158,10 +158,11 @@ public class UpcomingFragment extends Fragment {
                         // l object m3ak ya abo 5al eml l enta 3ayzo fi
                         Trip out= (Trip) mylistView.getItemAtPosition(listpostion);
                         handler.changeStatus(out.getId(),"done");
+                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
                         upCommingTrips.remove(listpostion);
                         adapter.notifyDataSetChanged();
                         startNavigation(out);
-                        TaskManager.getInstance(getActivity()).deleteTask(upCommingTrips.get(listpostion).getId());
+
                          //Toast.makeText(getActivity(),out.getName(),Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
@@ -232,30 +233,22 @@ public class UpcomingFragment extends Fragment {
                 System.out.println(response);
                 JSONArray jRoutes;
                 JSONArray jLegs;
-                String timInHours="0";
-                String timInMin="0";
+                long distanceInmeters;
+                long durationInSec;
+                long avgSpeed;
                 try {
                     jRoutes = response.getJSONArray("routes");
                     jLegs = ( (JSONObject)jRoutes.get(0)).getJSONArray("legs");
                     JSONObject jsonObject=jLegs.getJSONObject(0);
                     JSONObject distance=jsonObject.getJSONObject("distance");
                     JSONObject duration=jsonObject.getJSONObject("duration");
-                    System.out.println(distance.getString("text")+"<<<<>>>>"+duration.getString("text"));
-                    String dist=distance.getString("text").substring(0,distance.getString("text").indexOf("k"));
-                    if (duration.getString("text").contains("hours")){
-                        timInMin=duration.getString("text").substring(duration.getString("text").indexOf("s")+1,duration.getString("text").indexOf("m"));
-                        timInHours=duration.getString("text").substring(0,duration.getString("text").indexOf("h"));
-
-                    }
-                    else{
-                        timInMin=duration.getString("text").substring(0,duration.getString("text").indexOf("m"));
-                        timInHours="0";
-                    }
-                    System.out.println(dist+"<><><><>"+timInHours+"<><><><>"+timInMin);
-                    float speed= Float.parseFloat(dist.replace(",",".")) / (Float.parseFloat(timInHours) + Float.parseFloat(timInMin)/60) ;
-                    String avespeed=String.valueOf(speed);
-                    System.out.println(avespeed);
-                    System.out.println(new DataBaseHandler(getActivity().getApplicationContext()).changeDurationAndSpeed(trip.getId(),duration.getString("text"),avespeed));
+                    System.out.println(distance.getString("value")+"<<<<>>>>"+duration.getString("value"));
+                    distanceInmeters=distance.getLong("value");
+                    durationInSec=duration.getLong("value");
+                    System.out.println(distanceInmeters+"<><><><>"+durationInSec);
+                    avgSpeed=distanceInmeters/durationInSec;
+                    System.out.println(avgSpeed);
+                    System.out.println(new DataBaseHandler(getActivity().getApplicationContext()).changeDurationAndSpeed(trip.getId(),durationInSec+"",avgSpeed+""));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -133,7 +133,6 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                             System.out.println("Lat and lang    >" + lat + "    " + lng);
                             points.add(position);
                         }
-                        System.out.println("gwa el function     >" + points.get(2).longitude);
                         // Adding all the points in the route to LineOptions
 //                    lineOptions.addAll(points);
 //                    lineOptions.width(8);
@@ -144,7 +143,6 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeSource, longitudeSource)));
                     mMap.addMarker(new MarkerOptions().position(new LatLng(latitudeDest, longitudeDest)));
                 }
-                Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -160,7 +158,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap=googleMap;
         System.out.println("ana ready fel map");
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(26.8206, 30.8025), 7));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(26.8206, 30.8025), 6));
     }
 
     public String lnglatFromName(String tripName){

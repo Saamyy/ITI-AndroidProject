@@ -3,6 +3,7 @@ package com.example.romisaa.tripschedular;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     LinearLayout l3;
     LinearLayout l4;
     Fragment fragment;
+    ProgressDialog progressDialog;
 
     FragmentManager mgr;
     FragmentTransaction trns;
@@ -121,12 +123,14 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onResponse(String response) {
                                 System.out.println("success " + response);
+                                progressDialog.dismiss();
                                 Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 System.out.println(error.getMessage());
+                                progressDialog.dismiss();
                                 Toast.makeText(getActivity(), "Please Check Your Internet Connection", Toast.LENGTH_LONG).show();
                             }
                         }) {
@@ -140,6 +144,9 @@ public class HomeFragment extends Fragment {
                             }
                         };
                         singleton.addToRequestQueue(stringRequest);
+                        progressDialog = new ProgressDialog(HomeFragment.this.getActivity());
+                        progressDialog.setMessage("Fetching Data");
+                        progressDialog.show();
                     }
                 });
 
