@@ -250,7 +250,7 @@ public class ViewTrip extends AppCompatActivity {
                         timInHours="0";
                     }
                     System.out.println(dist+"<><><><>"+timInHours+"<><><><>"+timInMin);
-                    float speed= Float.parseFloat(dist) / (Float.parseFloat(timInHours) + Float.parseFloat(timInMin)/60) ;
+                    float speed= Float.parseFloat(dist.replace(",",".")) / (Float.parseFloat(timInHours) + Float.parseFloat(timInMin)/60) ;
                     String avespeed=String.valueOf(speed);
                     System.out.println(avespeed);
                     System.out.println(new DataBaseHandler(getApplicationContext()).changeDurationAndSpeed(trip.getId(),duration.getString("text"),avespeed));
