@@ -66,7 +66,7 @@ public class UpcomingFragment extends Fragment {
         mylistView= (SwipeMenuListView) view.findViewById(R.id.tripNames);
         adapter=new ListArrayAdapter(view.getContext(),R.layout.singlerow2,R.id.tripName,upCommingTrips);
         mylistView.setAdapter(adapter);
-        mylistView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
+        mylistView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
 
         mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

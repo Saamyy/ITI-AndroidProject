@@ -117,7 +117,7 @@ public class PastFragment extends Fragment {
             }
         };
         mylistView.setMenuCreator(creator);
-        mylistView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
+        mylistView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
 
         mylistView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
 
